@@ -12,6 +12,66 @@ const loginUrl = 'https://sso.cpe.fr/cas/login';
 const notesUrl = 'https://oga.cpe.fr/notes.php';
 
 
+/* Functions */
+
+const getBornFromTwoElements = async (array, arrayToSplit) => {
+    const results = [];
+
+    for(var [i, element] of array.entries()) {
+        if(i == 0) {
+            // First Element
+            element.modules = arrayToSplit.splice(array[0].index, array[1].index - 1);
+        } else if(i == array.length - 1) {
+            // Last Element
+            console.log(array[array.length - 1].index, arrayToSplit.length );
+            element.modules = arrayToSplit.splice(array[array.length - 1].index, arrayToSplit.length - 1);
+        } else {
+            element.modules = arrayToSplit.splice(array[i].index, array[parseInt(i)+1].index - 1);
+        }
+    }
+
+    return array;
+}
+
+const getModulesFromSemesters = async (semesters) => {
+    for(var [index, semester] of semesters.entries()) {
+        const modules = [];
+    }
+}
+
+const getSemesters = async (trs, semesters) => {
+    var parser = [];
+    
+    for(let semester of semesters) {
+        const trParent = await semester.parentElement();
+        const parentHtml = await trParent.getHTML();
+        
+        for(const [index, tr] of trs.entries()) {
+            const trHmtl = await tr.getHTML();
+            if(trHmtl == parentHtml) {
+                const label = await tr.$('.semestre');
+                parser.push({
+                    label : await label.getText(),
+                    index: index
+                });
+                break;
+            }
+        }
+    }
+
+    if(parser[0].index > 0) parser.unshift({
+        label: 'Project',
+        index: 0
+    });
+
+    console.log(trs.length)
+
+    const indexes = await getBornFromTwoElements(parser, trs);
+    console.log("Indexes : ", indexes);
+
+    return parser;
+}
+
 /* Start */
 
 const { remote } = require('webdriverio');
@@ -23,7 +83,8 @@ module.exports =  {
         browser = await remote({
             capabilities: {
                 browserName: 'chrome'
-            }
+            },
+            logLevel: "error"
         });
     },
     login: async (user = null) => {
@@ -51,16 +112,10 @@ module.exports =  {
     getNotes: async () => {
         await browser.url(notesUrl);
 
-        const semesters = await browser.$$('.semestre');
-        console.log("Semestres Found : ", semesters);
-
+        const semestersLabel = await browser.$$('.semestre');
         const trs = await browser.$$('<tr>');
-        
-        for(let semester of semesters) {
-            console.log("Semestre : ", semester);
-            const trParent = await semester.parentElement();
-            console.log("Parent :", trParent);
-            console.log("Index : ", trs.find(tr => trParent.getHTML() == tr.getHTML()));
-        }
+
+        const semesters = await getSemesters(trs, semestersLabel);
+        console.log(semesters);
     }
 };

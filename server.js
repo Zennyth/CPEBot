@@ -15,21 +15,21 @@ app.listen(port, () => {
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const backgroundTask = async () => {
-    console.log("Background task launched :");
+  console.log("Background task launched :");
 
-    try {
-        await login();
-        await getNotes();
+  try {
+    await login();
+    await getNotes();
 
-        await delay(6000);
-    } catch (error) {
-        
-    }
-    //await backgroundTask();
+    await delay(6000);
+  } catch (error) {
+      
+  }
+  //await backgroundTask();
 };
 
 
 init().then(() => {
-    backgroundTask();
+  backgroundTask();
 });
 
