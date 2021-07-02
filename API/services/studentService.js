@@ -5,8 +5,8 @@ module.exports = {
         console.log('Service / UserDto = ', userDto);
 
         const newUser = await models.student.create({
-            idstudent: 1,
-            yearpromotion: Date.now(),
+            idstudent: userDto.idstudent,
+            yearpromotion: userDto.yearpromotion,
             idsector: 1,
             mailstudent: userDto.mail,
             passwordstudent: userDto.password,
