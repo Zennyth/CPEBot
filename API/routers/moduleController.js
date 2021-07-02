@@ -20,6 +20,20 @@ var router = express.Router();
 });
 
 /**
+ * Get module by id
+ * @route Get /api/module/{id}
+ * @group Modules - Operations about modules
+ * @param {integer} id.path.required - id
+ * @returns {Array} 200 
+ * @returns {Error}  default - Unexpected error
+ */
+ router.get('/:id', function (req, res) {
+    moduleService.getByID(req.params.id).then(module => {
+        res.send(module)
+    })
+});
+
+/**
  * Add a module
  * @route POST /api/module/
  * @group Modules - Operations about modules
