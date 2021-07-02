@@ -1,6 +1,6 @@
-// user.js - user route module.
+// studentController.js - student route module.
 
-const UserService = require('../services/UserService');
+const studentService = require('../services/studentService');
 
 var express = require('express');
 var router = express.Router();

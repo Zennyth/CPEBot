@@ -2,6 +2,40 @@ const express = require('express');
 const app = express();
 const { port } = require('./config');
 
+const { sequelize } = require('./db');
+
+// Serialization to JSON
+app.use(express.json());
+
+// Use Swagger !
+const expressSwagger = require('express-swagger-generator')(app);
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'This is a sample server',
+            title: 'Swagger',
+            version: '1.0.0',
+        },
+        host: 'localhost:3000',
+        basePath: '',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: "",
+            }
+        }
+    },
+    basedir: __dirname, //app absolute path
+    files: ['./routers/**/*.js', './dto/**/*.js'] //Path to the API handle folder
+};
+expressSwagger(options);
 
 // Don't remove !!!
 app.get('/', (req, res) => {
@@ -9,12 +43,24 @@ app.get('/', (req, res) => {
 });
 
 // Import routers
-const UserController = require('./routers/UserController');
-app.use('api/user', UserController);
+const studentController = require('./routers/studentController');
+app.use('/api/student', studentController);
+const promotionController = require('./routers/promotionController');
+app.use('/api/promotion', promotionController);
+const sectorController = require('./routers/sectorController');
+app.use('/api/sector', sectorController);
 
 // Launch API
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(port, async () => {
+  console.log(`App / Example app listening at http://localhost:${port}`);
+
+  // is DB working ?
+  try {
+    await sequelize.authenticate();
+    console.log('DB / Connection has been established successfully.');
+  } catch (error) {
+    console.error('DB / Unable to connect to the database:', error);
+  }
 });
 
 
