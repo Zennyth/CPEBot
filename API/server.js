@@ -49,6 +49,8 @@ const promotionController = require('./routers/promotionController');
 app.use('/api/promotion', promotionController);
 const sectorController = require('./routers/sectorController');
 app.use('/api/sector', sectorController);
+const semesterController = require('./routers/semesterController');
+app.use('/api/semester', semesterController);
 
 // Launch API
 app.listen(port, async () => {
