@@ -1,18 +1,25 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const { port } = require('./config');
 
-const { init, login, getNotes } = require('./helpers/webScrapping');
 
+// Don't remove !!!
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+// Import routers
+const UserController = require('./routers/UserController');
+app.use('api/user', UserController);
+
+// Launch API
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+/*
+const { init, login, getNotes } = require('./helpers/webScrapping');
 
 const backgroundTask = async () => {
   console.log("Background task launched :");
@@ -32,4 +39,4 @@ const backgroundTask = async () => {
 init().then(() => {
   backgroundTask();
 });
-
+*/

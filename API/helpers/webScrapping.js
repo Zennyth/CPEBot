@@ -12,8 +12,6 @@ const loginUrl = 'https://sso.cpe.fr/cas/login';
 const notesUrl = 'https://oga.cpe.fr/notes.php';
 
 
-/* Utils */
-
 /*
 * getBornFromTwoElements(arrayWithIndexObject, arrayToSplit) : array<Semestre>
 * return the arrayWithIndexObject with the actual arrayToSplit[bornInf, bornSupp] based on Indexes
