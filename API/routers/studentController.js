@@ -10,9 +10,18 @@ router.get('/', function (req, res) {
   res.send('user home page');
 })
 
-// About page route.
-router.get('/about', function (req, res) {
-  res.send('About this user');
-})
+/**
+ * Add a student
+ * @route POST /api/student/
+ * @group semester - Operations about students
+ * @param {string} student.body.required - student to add
+ * @returns {boolean} 200 
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/', function (req, res) {
+  studentService.add(req.body).then(response => {
+    res.send(response);
+  });
+});
 
 module.exports = router;
