@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 /**
  * Add a student
  * @route POST /api/student/
- * @group semester - Operations about students
+ * @group student - Operations about students
  * @param {string} student.body.required - student to add
  * @returns {boolean} 200 
  * @returns {Error}  default - Unexpected error
