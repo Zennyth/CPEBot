@@ -9,5 +9,6 @@ module.exports = {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
   },
-  aesToken:process.env.AES_TOKEN
+  aesToken:process.env.AES_TOKEN,
+  discordBotToken: process.env.DISCORD_BOT_TOKEN
 }
