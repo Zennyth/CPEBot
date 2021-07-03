@@ -1,15 +1,20 @@
+const studentService = require('../services/studentService');
+const gradeService = require('../services/gradeService');
+const moduleService = require('../services/moduleService');
+const semesterService = require('../services/semesterService');
+
+const SemesterMapper = require('../mappers/semesterMapper');
+
+const aes = require('../helpers/aes');
+
+
 /* Temporary variables => db, .env */
 
-var current_user = {
-    login: "zennyth",
-    email: "mathis.figuet@cpe.fr",
-    password: "O45fWIE4",
-    token: null
-}
+var current_user = null;
 
 const logoutUrl = 'https://sso.cpe.fr/cas/logout';
 const loginUrl = 'https://sso.cpe.fr/cas/login';
-const notesUrl = 'https://oga.cpe.fr/notes.php';
+const gradesUrl = 'https://oga.cpe.fr/notes.php';
 
 
 /*
@@ -18,7 +23,7 @@ const notesUrl = 'https://oga.cpe.fr/notes.php';
 */
 const getBornFromTwoElements = async (array, arrayToSplit) => {
     if(array.length == 1) {
-        array[0].childElements = arrayToSplit.slice(array[0].index, arrayToSplit.length - 1);
+        array[0].childElements = arrayToSplit.slice(array[0].index, arrayToSplit.length);
     } else {
         for(var [i, element] of array.entries()) {
             if(i == 0) {
@@ -36,16 +41,16 @@ const getBornFromTwoElements = async (array, arrayToSplit) => {
 }
 
 /*
-* getLabelNotesFromSemesters(semesters) : array<string>
-* return all the notes label (used to check if there is a new grade)
+* getLabelgradesFromSemesters(semesters) : array<string>
+* return all the grades label (used to check if there is a new grade)
 */
 
-const getLabelNotesFromSemesters = (semesters) => {
+const getLabelGradesFromSemesters = (semesters) => {
     function reducer(acc, element){
-        if(element.note) acc.push(element.label);
+        if(element.mark) acc.push(element.label);
         else {
             if(element.modules) element.modules.reduce(reducer, acc);
-            else if(element.notes) element.notes.reduce(reducer, acc);
+            else if(element.grades) element.grades.reduce(reducer, acc);
         }
         return acc; 
     }
@@ -54,19 +59,19 @@ const getLabelNotesFromSemesters = (semesters) => {
 
 /* Functions */
 
-const getNotesFromModules = async (semesters) => {
+const getGradesFromModules = async (semesters) => {
     for(var [index, semester] of semesters.entries()) {
         for(const [indexModule, module] of semester.modules.entries()) {
-            module.notes = [];
+            module.grades = [];
             for(const elem of module.childElements) {
                 var doms = await elem.$$('.gris');
                 if(doms.length == 0) doms = await elem.$$('.blanc');
                 if(doms.length > 0) {
-                    module.notes.push({
+                    module.grades.push({
                         label: await doms[0].getText(),
                         type: await doms[1].getText(),
-                        coeff: await doms[2].getText(),
-                        note: await doms[3].getText()
+                        coeff: parseFloat((await doms[2].getText()).replace(' %', '')),
+                        mark: await doms[3].getText()
                     });
                 }
             }
@@ -112,7 +117,7 @@ const getSemesters = async (trs, semesters) => {
             if(trHmtl == parentHtml) {
                 const label = await tr.$('.semestre');
                 parser.push({
-                    label : await label.getText(),
+                    id : await label.getText(),
                     index: index
                 });
                 break;
@@ -121,7 +126,7 @@ const getSemesters = async (trs, semesters) => {
     }
 
     if(parser[0].index > 0) parser.unshift({
-        label: 'Project',
+        id: 'Projet',
         index: 0
     });
 
@@ -137,7 +142,10 @@ const { remote } = require('webdriverio');
 var browser = null;
 
 module.exports =  {
-    init: async () => {
+    initWebScrapping: async () => {
+        current_user = await studentService.getByMail("mathis.figuet@cpe.fr");
+        current_user = current_user.dataValues;
+
         browser = await remote({
             capabilities: {
                 browserName: 'chrome'
@@ -147,16 +155,18 @@ module.exports =  {
     },
     login: async (user = null) => {
         if(user != null) {
-            if(user.login != current_user.login) await browser.url(logoutUrl); // Logout before login in
+            if(user.mail != current_user.mail) await browser.url(logoutUrl); // Logout before login in
             current_user = user; // In case the user has changed his crendentials
         }
+
+        console.log(current_user);
 
         await browser.url(loginUrl); 
 
         const username = await browser.$('[name="username"]');
-        await username.setValue(current_user.email);
+        await username.setValue(current_user.mailstudent);
         const password = await browser.$('[name="password"]');
-        await password.setValue(current_user.password);
+        await password.setValue(aes.decrypt(current_user.passwordstudent));
         const submit = await browser.$('[name="submit"]');
         await submit.click();
 
@@ -167,18 +177,52 @@ module.exports =  {
             throw "Invalid Credentials"; 
         }
     },
-    getNotes: async () => {
-        await browser.url(notesUrl);
+    getGrades: async () => {
+        await browser.url(gradesUrl);
 
         const semestersLabel = await browser.$$('.semestre');
         const trs = await browser.$$('<tr>');
 
         const semesters = await getSemesters(trs, semestersLabel);
         await getModulesFromSemesters(semesters);
-        await getNotesFromModules(semesters);
+        await getGradesFromModules(semesters);
 
-        console.log(getLabelNotesFromSemesters(semesters));
+        console.log(getLabelGradesFromSemesters(semesters));
 
-        return semesters;
+        return semesters; 
+    },
+    setNestedSemestersModulesGrades: async (nestedSemesters) => {
+        for(const nestedSemester of nestedSemesters) {
+            // Semester
+            var modelSemester = null;
+            try {
+                modelSemester = await semesterService.add(nestedSemester);
+            } catch (error) {
+                modelSemester = {
+                    idsemester: nestedSemester.id
+                };
+            }
+
+            for(const nestedModule of nestedSemester.modules) {
+                var modelModule = null;
+                try {
+                    modelModule = await moduleService.add(nestedModule);
+                } catch (error) {
+                    modelModule = await moduleService.getByLabel(nestedModule.label);
+                }
+
+                for(var nestedGrade of nestedModule.grades) {
+                    nestedGrade.idStudent = current_user.idstudent;
+                    nestedGrade.idSemester = modelSemester.idsemester;
+                    nestedGrade.idModule = modelModule.idmodules;
+                    
+                    try {
+                        modelGrade = await gradeService.add(nestedGrade);
+                    } catch (error) {
+                        modelGrade = await gradeService.getByPK(nestedGrade.idSemester, nestedGrade.idStudent, nestedGrade.idModule, nestedGrade.label);
+                    }
+                }
+            }
+        }
     }
 };

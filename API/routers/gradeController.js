@@ -7,15 +7,15 @@ var router = express.Router();
 
 
 /**
- * Get all grades for a user 
+ * Get all marks organised by modules, semesters for a user
  * @route Get /api/grade/
  * @group Grades - Operations about grades
  * @returns {Array} 200 
- * @returns {Error}  default - Unexpected error
+ * @returns {Error} default - Unexpected error
  */
  router.get('/', function (req, res) {
     const idStudent = 1
-    gradeService.getAllGradesByUser(idStudent).then(grades => {
+    gradeService.getAllGradesByModulesSemestersForUser(idStudent).then(grades => {
         res.send(grades)
     })
 });

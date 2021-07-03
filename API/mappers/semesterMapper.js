@@ -1,7 +1,13 @@
 class semesterMapper {
-    static toDto (semester) {
+    static toDto (semesterModel) {
+        return semesterModel != null ? {
+            id: semesterModel.idsemester
+        } : null;
+    }
+
+    static toModel (semesterDto) {
         return {
-            id: semester.idsemester
+            idsemester: semesterDto.id
         }
     }
 }

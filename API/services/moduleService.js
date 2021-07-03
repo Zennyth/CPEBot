@@ -7,10 +7,10 @@ module.exports = {
         return modules.map(module => ModuleMapper.toDto(module));
     },
     add: async (moduleDto) => {
-        console.log('Service / ModuleDto = ', moduleDto);
+        //console.log('Service / ModuleDto = ', moduleDto);
 
         // Unique constraint
-        const alreayExists = await models.module.findOne({ where: { lblmodule: moduleDto.label } });
+        const alreayExists = await module.exports.getByLabel(moduleDto.label);
         if(alreayExists != null) {
             throw "This label is already used by another module.";
         }
@@ -19,6 +19,9 @@ module.exports = {
         return await models.module.create(moduleModel);
     },
     getByID: async (id) => {
-        return models.module.findByPk(id);
+        return  ModuleMapper.toDto(await models.module.findByPk(id));
+    },
+    getByLabel: async (label) => {
+        return  ModuleMapper.toDto(await models.module.findOne({ where: { lblmodule: label } }));
     },
 }

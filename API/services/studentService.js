@@ -14,7 +14,6 @@ module.exports = {
         return models.student.findByPk(id);
     },
     getByMail: async (mail) => {
-
         return await models.student.findOne({
             where: {
                 mailstudent: mail

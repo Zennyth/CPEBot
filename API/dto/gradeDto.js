@@ -9,12 +9,13 @@
  */
 
  class GradeDto {
-    constructor(idModule,idStudent,idSemester,mark,label,coeff) {
-        this.idModule = idModule,
-        this.idStudent = idStudent,
-        this.idSemester = idSemester,
-        this.mark = mark,
-        this.coeff = coeff
+    constructor(idModule,idStudent,idSemester,mark,label,coeff, type) {
+        this.idModule = idModule;
+        this.idStudent = idStudent;
+        this.idSemester = idSemester;
+        this.type = type;
+        this.mark = mark;
+        this.coeff = coeff;
         this.label = label;
     }
 }
