@@ -1,5 +1,6 @@
 const { models } = require('../db'); 
 const ModuleMapper = require('../mappers/moduleMapper');
+
 module.exports = {
     listAll: async () => {
         const modules = await models.module.findAll();
@@ -11,6 +12,6 @@ module.exports = {
         });
     },
     getByID: async (id) => {
-        return models.module.findByPk(id)
+        return models.module.findByPk(id);
     },
 }

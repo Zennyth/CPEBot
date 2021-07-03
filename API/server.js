@@ -1,11 +1,24 @@
 const express = require('express');
 const app = express();
 const { port } = require('./config');
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-const { sequelize } = require('./db');
+const { sequelize, init } = require('./db');
+
+// Cors
+const corsOptions = {
+  origin: `http://localhost:${port}`
+};
+app.use(cors(corsOptions));
 
 // Serialization to JSON
-app.use(express.json());
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Use Swagger !
 const expressSwagger = require('express-swagger-generator')(app);
@@ -33,7 +46,7 @@ let options = {
         }
     },
     basedir: __dirname, //app absolute path
-    files: ['./routers/**/*.js', './dto/**/*.js'] //Path to the API handle folder
+    files: ['./dto/**/*.js', './routers/**/*.js'] //Path to the API handle folder
 };
 expressSwagger(options);
 
@@ -60,6 +73,7 @@ app.listen(port, async () => {
 
   // is DB working ?
   try {
+    await init();
     await sequelize.authenticate();
     console.log('DB / Connection has been established successfully.');
   } catch (error) {

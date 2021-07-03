@@ -15,7 +15,8 @@ class studentMapper {
             yearpromotion: studentDto.yearpromotion,
             idsector: studentDto.idsector,
             mailstudent: studentDto.mail,
-            mailstudent: studentDto.pseudo
+            pseudostudent: studentDto.pseudo,
+            passwordstudent: studentDto.password
         }  
     }
 }

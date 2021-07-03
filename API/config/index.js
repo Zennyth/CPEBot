@@ -8,5 +8,6 @@ module.exports = {
     uri: process.env.DB_URI,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-  }
+  },
+  aesToken:process.env.AES_TOKEN
 }
