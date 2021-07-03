@@ -24,7 +24,7 @@ function initModels(sequelize) {
   semester.hasMany(grade, { as: "grades", foreignKey: "idsemester"});
   grade.belongsTo(student, { as: "idstudent_student", foreignKey: "idstudent"});
   student.hasMany(grade, { as: "grades", foreignKey: "idstudent"});
-  
+
   return {
     grade,
     module,

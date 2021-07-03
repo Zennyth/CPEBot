@@ -29,7 +29,7 @@ module.exports = {
         });
     },
     add: async (studentDto) => {
-        console.log('Service / UserDto = ', studentDto);
+        console.log('Service / StudentDto = ', studentDto);
 
         // Unique constraint
         const alreayExists = await module.exports.getByMail(studentDto.mail);
