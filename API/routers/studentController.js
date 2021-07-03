@@ -84,7 +84,7 @@ router.post('/signup', async function (req, res) {
     res.send(await studentService.login(req.body));
   } catch (err) {
     res.status(500);
-    res.json({ error: err });
+    res.json({ error: err || "Unkwnokwn Error"});
   }
 });
 

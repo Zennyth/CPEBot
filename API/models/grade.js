@@ -29,16 +29,21 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     lblgrade: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
+    },
+    typegrade: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      primaryKey: false
     },
     numbergrade: {
       type: DataTypes.DECIMAL,
       allowNull: true
     },
     coeffgrade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: true
     }
   }, {

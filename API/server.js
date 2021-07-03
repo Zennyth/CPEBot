@@ -86,16 +86,16 @@ app.listen(port, async () => {
 });
 
 
-/*
-const { init, login, getNotes } = require('./helpers/webScrapping');
+
+const { initWebScrapping, login, getGrades, setNestedSemestersModulesGrades } = require('./helpers/webScrapping');
 
 const backgroundTask = async () => {
   console.log("Background task launched :");
 
   try {
     await login();
-    await getNotes();
-
+    const nestedSemesters = await getGrades();
+    await setNestedSemestersModulesGrades(nestedSemesters);
     await delay(6000);
   } catch (error) {
       
@@ -104,7 +104,7 @@ const backgroundTask = async () => {
 };
 
 
-init().then(() => {
+initWebScrapping().then(() => {
   backgroundTask();
 });
-*/
+

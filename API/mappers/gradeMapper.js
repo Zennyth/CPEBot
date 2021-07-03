@@ -1,22 +1,24 @@
 class GradeMapper {
     static toDto (grade) {
-        return {
+        return grade != null ? {
             idModule : grade.idmodules,
             idStudent : grade.idstudent,
             idSemester : grade.idsemester,
             label: grade.lblgrade,
             mark : grade.numbergrade,
-            coeff : grade.coeffgrade
-        }
+            coeff : grade.coeffgrade,
+            type: grade.typegrade,
+        } : null;
     }
     static toModel (gradeDto) {
         return {
             idmodules : gradeDto.idModule,
             idstudent : gradeDto.idStudent,
             idsemester : gradeDto.idSemester,
-            label: gradeDto.lblgrade,
+            lblgrade: gradeDto.lblgrade || gradeDto.label,
             numbergrade : gradeDto.mark,
-            coeffgrade : gradeDto.coeff
+            coeffgrade : gradeDto.coeff,
+            typegrade: gradeDto.type,
         }  
     }
 }

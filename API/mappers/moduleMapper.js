@@ -1,8 +1,8 @@
 class ModuleMapper {
     static toDto (module) {
-        return {
+        return module != null ? {
             label: module.lblmodule
-        }
+        } : null;
     }
     static toModel (moduleDto) {
         return {
