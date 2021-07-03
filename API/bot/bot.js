@@ -15,5 +15,7 @@ client.on('message', msg => {
     }
 });
 
+console.log(CommandValidators[0]);
+
 client.login(config.discordBotToken);
 
