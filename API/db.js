@@ -26,7 +26,9 @@ const initial = () => {
     models.sector.create({
         "lblsector": "IRC"
     });
-    
+    models.module.create({
+        "lblmodule":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
+    })
     models.semester.create({
         idsemester: 5
     });
@@ -39,6 +41,14 @@ const initial = () => {
         "mailstudent": "mathis.figuet@cpe.fr",
         "pseudostudent": "zennyth",
         "passwordstudent": "test"
+    });
+    models.grade.create({
+        "idmodules": 1,
+        "idstudent": 1,
+        "idsemester":5,
+        "lblgrade": "DS",
+        "numbergrade": 15,
+        "coeffgrade":5
     });
 }
 

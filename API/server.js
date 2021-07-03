@@ -66,6 +66,8 @@ const moduleController = require('./routers/moduleController');
 app.use('/api/module', moduleController);
 const semesterController = require('./routers/semesterController');
 app.use('/api/semester', semesterController);
+const gradeController = require('./routers/gradeController');
+app.use('/api/grade', gradeController);
 
 // Launch API
 app.listen(port, async () => {
