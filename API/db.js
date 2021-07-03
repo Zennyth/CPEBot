@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const { db } = require('./config');
+const aes = require('./helpers/aes');
 
 const sequelize = new Sequelize('CPEAPI', db.username, db.password, {
     host: db.uri,
@@ -38,7 +39,7 @@ const initial = () => {
         "idsector": 1,
         "mailstudent": "mathis.figuet@cpe.fr",
         "pseudostudent": "zennyth",
-        "passwordstudent": "test"
+        "passwordstudent": aes.encrypt("test")
     });
 }
 

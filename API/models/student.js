@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
     pseudostudent: {
       type: DataTypes.STRING(30),
       allowNull: false
+    },
+    tokenlogstudent: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     }
   }, {
     sequelize,

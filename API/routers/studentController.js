@@ -1,9 +1,18 @@
 // studentController.js - student route module.
 
 const studentService = require('../services/studentService');
+const authJwt = require("../middlewares/authJwtMiddleware");
 
 var express = require('express');
 var router = express.Router();
+
+router.use(function(req, res, next) {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
 
 /**
  * Get all students
@@ -12,7 +21,7 @@ var router = express.Router();
  * @returns {Array} 200 
  * @returns {Error}  default - Unexpected error
  */
-router.get('/', function (req, res) {
+router.get('/', [authJwt.verifyToken], function (req, res) {
   studentService.listAll().then(response => {
     res.send(response);
   });
@@ -34,13 +43,13 @@ router.get('/', function (req, res) {
 
 /**
  * Add a student
- * @route POST /api/student/
+ * @route POST /api/student/signup
  * @group student - Operations about students
  * @param {string} student.body.required - student to add
  * @returns {boolean} 200 
  * @returns {Error}  default - Unexpected error
  */
-router.post('/', async function (req, res) {
+router.post('/signup', async function (req, res) {
   /*test {
     "yearpromotion": "2020-09-01",
     "idsector": 1,
@@ -51,6 +60,28 @@ router.post('/', async function (req, res) {
   
   try {
     res.send(await studentService.add(req.body));
+  } catch (err) {
+    res.status(500);
+    res.json({ error: err });
+  }
+});
+
+/**
+ * Login as a student
+ * @route POST /api/student/login
+ * @group student - Operations about students
+ * @param {string} student.body.required - student to be looges as
+ * @returns {boolean} 200 
+ * @returns {Error}  default - Unexpected error
+ */
+ router.post('/login', async function (req, res) {
+  /*test {
+    "mail": "mathis.figuet@cpe.fr",
+    "password": "test"
+  }*/
+  
+  try {
+    res.send(await studentService.login(req.body));
   } catch (err) {
     res.status(500);
     res.json({ error: err });

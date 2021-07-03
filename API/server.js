@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Use Swagger !
+
 const expressSwagger = require('express-swagger-generator')(app);
 let options = {
     swaggerDefinition: {
@@ -37,13 +38,14 @@ let options = {
         ],
         schemes: ['http', 'https'],
         securityDefinitions: {
-            JWT: {
+          bearerAuth: {
+                name: "x-access-token",
                 type: 'apiKey',
+                scheme: 'bearer',
                 in: 'header',
-                name: 'Authorization',
-                description: "",
             }
-        }
+        },
+        security: [ { bearerAuth: [] } ],
     },
     basedir: __dirname, //app absolute path
     files: ['./dto/**/*.js', './routers/**/*.js'] //Path to the API handle folder
