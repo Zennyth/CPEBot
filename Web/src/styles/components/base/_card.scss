@@ -20,8 +20,9 @@
         }
     }
 
-    * {
+    > * {
         text-align: left;
+        color: $text-secondary;
     }
 
     &-shadow {
@@ -29,7 +30,7 @@
     }
 
     &.primary {
-        background: linear-gradient(45deg, rgba(254,226,222,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+        background: $bg-primary;
     }
 
     &.transparent {
@@ -37,24 +38,23 @@
     }
 
     &.glass {
-        background: $card-glass-background;
-        backdrop-filter: $card-glass-blur;
-        -webkit-backdrop-filter: $card-glass-blur;
+        background: transparent;
         border: $card-glass-border;
     }
 
     &.colorfull {
-        background: #ac40ff;
+        background: $bg-primary;
         position: relative;
         z-index: 100;
         overflow: hidden;
-        
+        backdrop-filter: $card-glass-blur;
+        /*
         &::before {
             content: '';
             width: 200px;
             height: 200px;
             position: absolute;
-            background: radial-gradient(circle, #f67a74 0%, transparent 80%);
+            background: radial-gradient(circle, $primary 0%, transparent 80%);
             border-radius: 50%;
             top: -100px;
             left: -100px;
@@ -66,12 +66,12 @@
             width: 200px;
             height: 200px;
             position: absolute;
-            background: radial-gradient(circle, #5d74fe 0%, transparent 80%);
+            background: radial-gradient(circle, $secondary 0%, transparent 80%);
             border-radius: 50%;
             top: 0px;
             right: -100px;
             z-index: 0;
-        }
+        }*/
 
         p, h4 {
             color: white !important;

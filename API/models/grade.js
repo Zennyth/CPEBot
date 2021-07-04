@@ -45,10 +45,6 @@ module.exports = function(sequelize, DataTypes) {
     coeffgrade: {
       type: DataTypes.DECIMAL,
       allowNull: true
-    },
-    rankgrade: {
-      type: DataTypes.CHAR(1),
-      allowNull : true
     }
   }, {
     sequelize,

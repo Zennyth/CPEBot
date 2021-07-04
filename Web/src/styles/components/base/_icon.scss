@@ -15,3 +15,11 @@
         padding-bottom: 100%;
     }
 }
+
+.b-icon {
+    transition: color .5 ease;
+    &:focus {
+        outline: none;
+        color: white;
+    }
+}

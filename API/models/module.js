@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     lblmodule: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    rankmodule: {
+      type: DataTypes.CHAR(1),
+      allowNull : true
     }
   }, {
     sequelize,

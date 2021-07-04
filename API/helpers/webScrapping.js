@@ -79,6 +79,14 @@ const getGradesFromModules = async (semesters) => {
                 }
             }
         }
+        var i = 0;
+        for(const [index, elem] of semester.childElements.entries()) {
+            const rankElem = await elem.$$('.average');
+            if(rankElem.length > 0) {
+                semester.modules[i].rank = (await rankElem[0].getText()).slice(-1);;
+                i++;
+            }
+        }
     }
 }
 

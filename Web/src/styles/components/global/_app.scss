@@ -3,9 +3,9 @@
     height: 100vh;
     position: absolute;
     z-index: 0;
-    background: rgba( 10, 10, 10, 0.8 );
+    background: rgba( 40, 40, 40, 0.4 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 10px );
+    backdrop-filter: blur( 60px );
     -webkit-backdrop-filter: blur( 4px );
     overflow: overlay;
 }
@@ -29,32 +29,32 @@
 
         > div.circle {
             z-index: -999;
-            width: 250vw;
-            height: 250vw;
+            width: 125vw;
+            height: 125vw;
             border-radius: 50%;
             //background: linear-gradient(135deg, rgba(135,147,255,1) 0%, rgba(184,232,231,1) 100%);
             position: absolute;
             z-index: -999;
             
             &:nth-child(1) {
-                top: calc(-85vw);
-                left: calc(-125vw);
+                top: calc(-45vw);
+                left: calc(-65vw);
 
-                background: radial-gradient(circle, rgba(255,158,170,1) 0%, transparent 80%);
+                background: radial-gradient(circle, $primary 0%, transparent 60%);
             }
             
             &:nth-child(2) {
                 top: 60vh;
-                left: calc(-125vw);
+                left: calc(45vw);
 
-                background: radial-gradient(circle, #6a33fc 0%, transparent 80%);
+                background: radial-gradient(circle, $secondary 0%, transparent 50%);
             }
-
+            /*
             &:nth-child(3) {
                 top: 30vh;
                 left: 200px;
                 background: radial-gradient(circle, rgba(234,178,242,1) 0%, transparent 100%);
-            }
+            }*/
         }
     }
 }

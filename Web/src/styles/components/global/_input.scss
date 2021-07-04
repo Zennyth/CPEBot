@@ -1,0 +1,12 @@
+input {
+    &.form-control {
+        background-color: $bg-primary;
+        border-radius: 10px;
+        border: $card-glass-border;
+
+        &:focus {
+            background-color: $bg-primary;
+            color: white;
+        }
+    }
+}

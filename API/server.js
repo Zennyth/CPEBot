@@ -8,7 +8,7 @@ const { sequelize, init } = require('./db');
 
 // Cors
 const corsOptions = {
-  origin: `http://localhost:${port}`
+  origin: `http://localhost:${8080}`
 };
 app.use(cors(corsOptions));
 

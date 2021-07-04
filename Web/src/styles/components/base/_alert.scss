@@ -1,0 +1,14 @@
+.vue-notification-group {
+    width: 100% !important;
+}
+
+.alert {
+    background-color: transparent !important;
+    border: $card-glass-border;
+    width: 100% !important;
+    color: white !important;
+
+    &-danger {
+        color: #e04949 !important;
+    }
+}

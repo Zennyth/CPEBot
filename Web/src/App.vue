@@ -8,26 +8,24 @@
       </div>
     </div>
     <div id="app">
-      <Header />
+      <notifications group="global" classes="alert" animation-type="velocity"/>
       <main>
         <transition name="fade">
           <router-view/>
         </transition>
       </main>
-      <Footer />
+      <Header />
     </div>
   </div>
 </template>
 
 <script>
 import Header from "@/components/global/Header";
-import Footer from "@/components/global/Footer";
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer
   }
 }
 </script>

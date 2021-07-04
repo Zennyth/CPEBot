@@ -31,6 +31,11 @@ const i18n = new VueI18n({
   messages, // set locale messages
 })
 
+
+import Notifications from 'vue-notification'
+import velocity      from 'velocity-animate'
+Vue.use(Notifications, { velocity })
+
 Vue.config.productionTip = false
 
 new Vue({

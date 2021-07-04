@@ -1,14 +1,17 @@
 $border-radius: 20px;
 $text-primary: white;
-$text-secondary: rgb(66,67,107);
+$text-secondary: #878583;
+
+// Background
+$bg-primary: #23221e;
 
 // Colors
-$primary: #ffbec6;
-$secondary: #ac40ff;
+$primary: #eb1144;
+$secondary: #81f7fd;
 
 // Glass Design
 $box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-$glass-background: rgba( 255, 255, 255, 0.1 );
+$glass-background: rgba( 10, 10, 10, 0.1 );
 $glass-blur: blur( 4px );
 $glass-border: 1px solid rgba( 255, 255, 255, 0.18 );
 
