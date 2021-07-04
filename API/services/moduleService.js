@@ -7,8 +7,6 @@ module.exports = {
         return modules.map(module => ModuleMapper.toDto(module));
     },
     add: async (moduleDto) => {
-        //console.log('Service / ModuleDto = ', moduleDto);
-
         // Unique constraint
         const alreayExists = await module.exports.getByLabel(moduleDto.label);
         if(alreayExists != null) {

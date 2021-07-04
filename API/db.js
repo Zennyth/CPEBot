@@ -34,12 +34,6 @@ const initial = async () => {
     await models.sector.create({
         "lblsector": "ICS"
     });
-    await models.module.create({
-        "idmodule":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
-    })
-    await models.module.create({
-        "idmodule":"Informatique - Programmation Orientée Objet en Java & Bases de données & Techniques et Langages du web"
-    })
     await models.semester.create({
         idsemester: "SEMESTRE 5"
     });
@@ -63,10 +57,8 @@ module.exports = {
     sequelize: sequelize,
     models: models,
     init: async () => {
-        /*
         await syncModels();
         await initial();
-        sequelize.options.logging = true;
-        */
+        //sequelize.options.logging = true;
     }
 };
