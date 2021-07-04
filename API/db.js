@@ -35,10 +35,10 @@ const initial = async () => {
         "lblsector": "ICS"
     });
     await models.module.create({
-        "idmodule":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
+        "label":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
     })
     await models.module.create({
-        "idmodule":"Informatique - Programmation Orientée Objet en Java & Bases de données & Techniques et Langages du web"
+        "label":"Informatique - Programmation Orientée Objet en Java & Bases de données & Techniques et Langages du web"
     })
     await models.semester.create({
         idsemester: "SEMESTRE 5"
@@ -55,7 +55,8 @@ const initial = async () => {
         "idsector": 1,
         "mailstudent": "florent.monnet@cpe.fr",
         "pseudostudent": "nainculé",
-        "passwordstudent": aes.encrypt("Nounours38.0")
+        "passwordstudent": aes.encrypt("Nounours38.0"),
+        "ispublic": true
     });
 }
 
@@ -63,10 +64,8 @@ module.exports = {
     sequelize: sequelize,
     models: models,
     init: async () => {
-        /*
         await syncModels();
         await initial();
         sequelize.options.logging = true;
-        */
     }
 };

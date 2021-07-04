@@ -39,6 +39,11 @@ module.exports = function(sequelize, DataTypes) {
     tokenlogstudent: {
       type: DataTypes.STRING(50),
       allowNull: true
+    },
+    ispublic: {
+      type: DataTypes.BOOLEAN,
+      allowNull : false,
+      defaultValue : false
     }
   }, {
     sequelize,
