@@ -1,9 +1,18 @@
 // promotionController.js - module route module.
 
 const gradeService = require('../services/gradeService');
+const authJwt = require("../middlewares/authJwtMiddleware");
 
 var express = require('express');
 var router = express.Router();
+
+router.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+});  
 
 
 /**
@@ -13,11 +22,15 @@ var router = express.Router();
  * @returns {Array} 200 
  * @returns {Error} default - Unexpected error
  */
- router.get('/', function (req, res) {
-    const idStudent = 2;
-    gradeService.getAllGradesByModulesSemestersForUser(idStudent).then(grades => {
-        res.send(grades)
-    })
+ router.get('/', [authJwt.verifyToken], function (req, res) {
+    if(res.locals.student) {
+        gradeService.getAllGradesByModulesSemestersForUser(res.locals.student.idstudent).then(grades => {
+            res.send(grades);
+        })
+    } else {
+        res.status(500);
+        res.json({ error: "You must be logged in."});
+    }
 });
 
 module.exports = router;

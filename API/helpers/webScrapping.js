@@ -210,6 +210,7 @@ const setNestedSemestersModulesGrades = async (nestedSemesters) => {
                 try {
                     modelGrade = await gradeService.add(nestedGrade);
                 } catch (error) {
+                    console.log(error)
                     modelGrade = await gradeService.getByPK(nestedGrade.idSemester, nestedGrade.idStudent, nestedGrade.idModule, nestedGrade.label);
                 }
             }

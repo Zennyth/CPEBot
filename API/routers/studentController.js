@@ -79,7 +79,7 @@ router.post('/signup', async function (req, res) {
  router.post('/login', async function (req, res) {
   /*test {
     "mail": "mathis.figuet@cpe.fr",
-    "password": "test"
+    "password": "password"
   }*/
   
   try {

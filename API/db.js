@@ -34,12 +34,6 @@ const initial = async () => {
     await models.sector.create({
         "lblsector": "ICS"
     });
-    await models.module.create({
-        "label":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
-    })
-    await models.module.create({
-        "label":"Informatique - Programmation Orientée Objet en Java & Bases de données & Techniques et Langages du web"
-    })
     await models.semester.create({
         idsemester: "SEMESTRE 5"
     });
