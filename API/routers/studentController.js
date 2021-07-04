@@ -2,7 +2,7 @@
 
 const studentService = require('../services/studentService');
 const authJwt = require("../middlewares/authJwtMiddleware");
-
+const ws = require("../helpers/webScrapping")
 var express = require('express');
 var router = express.Router();
 
@@ -22,7 +22,7 @@ router.use(function(req, res, next) {
  * @returns {Error}  default - Unexpected error
  */
 router.get('/', [authJwt.verifyToken], function (req, res) {
-  studentService.listAll().then(response => {
+  studentService.getAllPublicUsers().then(response => {
     res.send(response);
   });
 });
@@ -59,7 +59,9 @@ router.post('/signup', async function (req, res) {
   }*/
   
   try {
-    res.send(await studentService.add(req.body));
+    const newStudent =await studentService.add(req.body);
+    await ws.checkNewGradesByUser(newStudent)
+    res.send(newStudent)
   } catch (err) {
     res.status(500);
     res.json({ error: err });

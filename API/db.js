@@ -49,7 +49,8 @@ const initial = async () => {
         "idsector": 1,
         "mailstudent": "florent.monnet@cpe.fr",
         "pseudostudent": "nainculé",
-        "passwordstudent": aes.encrypt("Nounours38.0")
+        "passwordstudent": aes.encrypt("Nounours38.0"),
+        "ispublic": true
     });
 }
 
@@ -59,6 +60,6 @@ module.exports = {
     init: async () => {
         await syncModels();
         await initial();
-        //sequelize.options.logging = true;
+        sequelize.options.logging = true;
     }
 };

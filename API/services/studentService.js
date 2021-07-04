@@ -1,6 +1,5 @@
 const { models } = require('../db');
 const StudentMapper = require('../mappers/studentMapper'); 
-
 const aes = require('../helpers/aes');
 const crypto = require("crypto");
 const { userInfo } = require('os');
@@ -8,6 +7,14 @@ const { userInfo } = require('os');
 module.exports = {
     listAll: async () => {
         const students = await models.student.findAll();
+        return students.map(student => StudentMapper.toDto(student));
+    },
+    getAllPublicUsers: async () => {
+        const students = await models.student.findAll({
+            where:{
+                ispublic : true
+            }
+        });
         return students.map(student => StudentMapper.toDto(student));
     },
     getById: async (id) => {
@@ -52,7 +59,7 @@ module.exports = {
 
         // Login in
         studentModel.tokenlogstudent = crypto.randomBytes(20).toString('hex');
-
+        
         return await models.student.create(studentModel);
     },
     login: async (studentDto) => {

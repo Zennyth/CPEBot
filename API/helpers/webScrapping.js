@@ -246,6 +246,7 @@ const { remote } = require('webdriverio');
 var browser = null;
 
 module.exports =  {
+    checkNewGradesByUser: checkNewGrades,
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("mathis.figuet@cpe.fr");
         current_user = current_user.dataValues;
