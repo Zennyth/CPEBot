@@ -1,4 +1,4 @@
-let CommandValidators = {
+module.exports = {
     checkUser: function(user){
         let bool = false
         //let listUsers = getListUsers();
@@ -13,7 +13,7 @@ let CommandValidators = {
     checkArguments: function(nbArguments, message){
         let bool = false
         if (message !== undefined){
-            let nbArgumentsActual = message.match(/(\w+)/g). length
+            let nbArgumentsActual = message.match(/(\w+)/g).length
             if (nbArguments === nbArgumentsActual){
                 bool = true
             }
@@ -21,5 +21,3 @@ let CommandValidators = {
         return bool
     }
 }
-
-module.exports = CommandValidators

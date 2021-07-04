@@ -22,6 +22,6 @@ module.exports = {
         return  ModuleMapper.toDto(await models.module.findByPk(id));
     },
     getByLabel: async (label) => {
-        return  ModuleMapper.toDto(await models.module.findOne({ where: { lblmodule: label } }));
+        return await models.module.findOne({ where: { lblmodule: label }, raw: true });
     },
 }

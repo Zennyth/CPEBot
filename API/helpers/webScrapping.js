@@ -3,6 +3,9 @@ const gradeService = require('../services/gradeService');
 const moduleService = require('../services/moduleService');
 const semesterService = require('../services/semesterService');
 
+const { sequelize } = require('../db');
+const { QueryTypes } = require('sequelize');
+
 const SemesterMapper = require('../mappers/semesterMapper');
 
 const aes = require('../helpers/aes');
@@ -135,6 +138,106 @@ const getSemesters = async (trs, semesters) => {
     return parser;
 }
 
+const login = async (user = null) => {
+    if(user != null) {
+        if(user.mailstudent != current_user.mailstudent) {
+            await browser.url(logoutUrl); // Logout before login in
+            await browser.deleteCookies();
+            await browser.reloadSession();
+        }
+        current_user = user; // In case the user has changed his crendentials
+    }
+
+    console.log(current_user);
+
+    await browser.url(loginUrl); 
+
+    const username = await browser.$('[name="username"]');
+    await username.setValue(current_user.mailstudent);
+    const password = await browser.$('[name="password"]');
+    await password.setValue(aes.decrypt(current_user.passwordstudent));
+    const submit = await browser.$('[name="submit"]');
+    await submit.click();
+
+    const confirmation = await browser.$('.success'); // Check if the crendetials were valid
+    if(!confirmation.error) console.log("Login successfull !");
+    else {
+        await browser.url(logoutUrl);
+        throw "Invalid Credentials"; 
+    }
+};
+
+const getGrades = async () => {
+    await browser.url(gradesUrl);
+
+    const semestersLabel = await browser.$$('.semestre');
+    const trs = await browser.$$('<tr>');
+
+    const semesters = await getSemesters(trs, semestersLabel);
+    await getModulesFromSemesters(semesters);
+    await getGradesFromModules(semesters);
+
+    return semesters; 
+};
+
+const setNestedSemestersModulesGrades = async (nestedSemesters) => {
+    for(const nestedSemester of nestedSemesters) {
+        // Semester
+        var modelSemester = null;
+        try {
+            modelSemester = await semesterService.add(nestedSemester);
+        } catch (error) {
+            modelSemester = {
+                idsemester: nestedSemester.id
+            };
+        }
+
+        for(const nestedModule of nestedSemester.modules) {
+            // Module
+            var modelModule = null;
+            try {
+                modelModule = await moduleService.add(nestedModule);
+            } catch (error) {
+                modelModule = await moduleService.getByLabel(nestedModule.label);
+            }
+
+            for(var nestedGrade of nestedModule.grades) {
+                // Grade
+                nestedGrade.idStudent = current_user.idstudent;
+                nestedGrade.idSemester = modelSemester.idsemester;
+                nestedGrade.idModule = modelModule.idmodules;
+                
+                try {
+                    modelGrade = await gradeService.add(nestedGrade);
+                } catch (error) {
+                    modelGrade = await gradeService.getByPK(nestedGrade.idSemester, nestedGrade.idStudent, nestedGrade.idModule, nestedGrade.label);
+                }
+            }
+        }
+    }
+};
+
+const checkNewGrades = async (student = null) => {
+    await login(student);
+
+    const currentGradesLabel = getLabelGradesFromSemesters(await gradeService.getAllGradesByUser(current_user.idstudent));
+    //console.log("WebScrapping / checkNewGrades (current grades label): ", currentGradesLabel.length);
+
+    const webScrappedGrades = await getGrades();
+    const webScrappedGradesLabel = getLabelGradesFromSemesters(webScrappedGrades);
+    //console.log("WebScrapping / checkNewGrades (webscrapped grades label): ", webScrappedGradesLabel.length);
+
+    const newGradesLabel = webScrappedGradesLabel.filter(webScrappedGrade => !currentGradesLabel.includes(webScrappedGrade));
+    //console.log("WebScrapping / checkNewGrades (new grades label): ", newGradesLabel.length);
+
+    if(newGradesLabel.length > 0) {
+        await setNestedSemestersModulesGrades(webScrappedGrades);
+        return true;
+    } else {
+        return false;
+    }
+};
+
 /* Main */
 
 const { remote } = require('webdriverio');
@@ -145,7 +248,6 @@ module.exports =  {
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("mathis.figuet@cpe.fr");
         current_user = current_user.dataValues;
-
         browser = await remote({
             capabilities: {
                 browserName: 'chrome'
@@ -153,74 +255,17 @@ module.exports =  {
             logLevel: "error"
         });
     },
-    login: async (user = null) => {
-        if(user != null) {
-            if(user.mail != current_user.mail) await browser.url(logoutUrl); // Logout before login in
-            current_user = user; // In case the user has changed his crendentials
-        }
+    checkNewGradesByPromotionAndSector: async () => {
+        const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
+        //console.log("WebScrapping / checkNewGradesByPromotionAndSector : (promotions and sectors)", combinations);
+        for(const combination of combinations) {
+            const students = await studentService.getAllByPromotionAndSector(combination.idsector, combination.yearpromotion);
+            if(students.length > 0) {
 
-        console.log(current_user);
+                if(!(await checkNewGrades(students.shift()))) return;
 
-        await browser.url(loginUrl); 
-
-        const username = await browser.$('[name="username"]');
-        await username.setValue(current_user.mailstudent);
-        const password = await browser.$('[name="password"]');
-        await password.setValue(aes.decrypt(current_user.passwordstudent));
-        const submit = await browser.$('[name="submit"]');
-        await submit.click();
-
-        const confirmation = await browser.$('.success'); // Check if the crendetials were valid
-        if(!confirmation.error) console.log("Login successfull !");
-        else {
-            await browser.url(logoutUrl);
-            throw "Invalid Credentials"; 
-        }
-    },
-    getGrades: async () => {
-        await browser.url(gradesUrl);
-
-        const semestersLabel = await browser.$$('.semestre');
-        const trs = await browser.$$('<tr>');
-
-        const semesters = await getSemesters(trs, semestersLabel);
-        await getModulesFromSemesters(semesters);
-        await getGradesFromModules(semesters);
-
-        console.log(getLabelGradesFromSemesters(semesters));
-
-        return semesters; 
-    },
-    setNestedSemestersModulesGrades: async (nestedSemesters) => {
-        for(const nestedSemester of nestedSemesters) {
-            // Semester
-            var modelSemester = null;
-            try {
-                modelSemester = await semesterService.add(nestedSemester);
-            } catch (error) {
-                modelSemester = {
-                    idsemester: nestedSemester.id
-                };
-            }
-
-            for(const nestedModule of nestedSemester.modules) {
-                var modelModule = null;
-                try {
-                    modelModule = await moduleService.add(nestedModule);
-                } catch (error) {
-                    modelModule = await moduleService.getByLabel(nestedModule.label);
-                }
-
-                for(var nestedGrade of nestedModule.grades) {
-                    nestedGrade.idStudent = current_user.idstudent;
-                    nestedGrade.idSemester = modelSemester.idsemester;
-                    nestedGrade.idModule = modelModule.idmodules;
-                    
-                    try {
-                        modelGrade = await gradeService.add(nestedGrade);
-                    } catch (error) {
-                        modelGrade = await gradeService.getByPK(nestedGrade.idSemester, nestedGrade.idStudent, nestedGrade.idModule, nestedGrade.label);
-                    }
+                for(const student of students) {
+                    await checkNewGrades(student);
                 }
             }
         }

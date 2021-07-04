@@ -8,7 +8,7 @@ var router = express.Router();
 /**
  * Get all promotions
  * @route Get /api/promotion/
- * @group promotion - Operations about promotions
+ * @group Promotions - Operations about promotions
  * @returns {Array} 200 
  * @returns {Error}  default - Unexpected error
  */
@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
 /**
  * Add a promotion
  * @route POST /api/promotion/
- * @group promotion - Operations about promotions
+ * @group Promotions - Operations about promotions
  * @param {string} promotion.body.required - year of the promotion
  * @returns {boolean} 200 
  * @returns {Error}  default - Unexpected error

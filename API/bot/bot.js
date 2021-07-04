@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('../config');
 const tabCmds = require('./commands/botCommands');
-const CommandValidators = require('./validators/commandsValidators');
+const CommandValidators = require('./validators/commandValidators');
 
 console.log(tabCmds)
 
@@ -15,7 +15,7 @@ client.on('message', msg => {
     }
 });
 
-console.log(CommandValidators[0]);
+
+tabCmds[0].validators.forEach(validator => validator("$grades zennyth", {numberOfParamters: 1}));
 
 client.login(config.discordBotToken);
-

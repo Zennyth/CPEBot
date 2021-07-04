@@ -1,4 +1,4 @@
-const { checkArguments, checkUser } = require("../validators/commandsValidators")
+const { checkArguments, checkUser } = require("../validators/commandValidators")
 
 
 

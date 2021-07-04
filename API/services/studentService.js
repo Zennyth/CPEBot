@@ -27,6 +27,15 @@ module.exports = {
             }
         });
     },
+    getAllByPromotionAndSector: async (idsector, yearpromotion) => {
+        return await models.student.findAll({
+            where: {
+                idsector: idsector,
+                yearpromotion: yearpromotion
+            },
+            raw: true
+        });
+    },
     add: async (studentDto) => {
         console.log('Service / StudentDto = ', studentDto);
 

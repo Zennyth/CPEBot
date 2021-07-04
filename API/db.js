@@ -25,8 +25,14 @@ const initial = async () => {
     await models.promotion.create({
         "yearpromotion": "2020-09-01"
     });
+    await models.promotion.create({
+        "yearpromotion": "2021-09-01"
+    });
     await models.sector.create({
         "lblsector": "IRC"
+    });
+    await models.sector.create({
+        "lblsector": "ICS"
     });
     await models.module.create({
         "idmodule":"Systèmes et Réseaux - Architecture des Réseaux Locaux & Les bases de la sécurité informatique"
@@ -44,23 +50,12 @@ const initial = async () => {
         "pseudostudent": "zennyth",
         "passwordstudent": aes.encrypt("O45fWIE4")
     });
-    await models.grade.create({
-        "idmodules": 1,
-        "idstudent": 1,
-        "idsemester":"SEMESTRE 5",
-        "lblgrade": "1INTRO RES - Introduction Réseaux DS",
-        "typegrade": "Devoir surveillé écrit",
-        "numbergrade": 9,
-        "coeffgrade":30
-    });
-    await models.grade.create({
-        "idmodules": 2,
-        "idstudent": 1,
-        "idsemester":"SEMESTRE 5",
-        "lblgrade": "1TLW - Techniques et Langages du Web Contrôle continu",
-        "typegrade": "Notation Travaux pratiques",
-        "numbergrade": 15,
-        "coeffgrade":16.5
+    await models.student.create({
+        "yearpromotion": "2020-09-01",
+        "idsector": 1,
+        "mailstudent": "florent.monnet@cpe.fr",
+        "pseudostudent": "nainculé",
+        "passwordstudent": aes.encrypt("Nounours38.0")
     });
 }
 
@@ -68,8 +63,10 @@ module.exports = {
     sequelize: sequelize,
     models: models,
     init: async () => {
+        /*
         await syncModels();
         await initial();
-        //sequelize.options.logging = true;
+        sequelize.options.logging = true;
+        */
     }
 };

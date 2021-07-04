@@ -14,7 +14,7 @@ var router = express.Router();
  * @returns {Error} default - Unexpected error
  */
  router.get('/', function (req, res) {
-    const idStudent = 1
+    const idStudent = 2;
     gradeService.getAllGradesByModulesSemestersForUser(idStudent).then(grades => {
         res.send(grades)
     })

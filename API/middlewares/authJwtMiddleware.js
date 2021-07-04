@@ -15,7 +15,10 @@ const verifyToken = async (req, res, next) => {
     if(token && token != "") {
         studentService.getByToken(token).then(student => {
             console.log("Middleware : ", student);
-            if(student !== null) next();
+            if(student !== null) {
+                res.locals.student = student;
+                next();
+            }
             else {
                 return res.status(403).send({
                     message: "Unauthorized !"

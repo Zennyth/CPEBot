@@ -8,7 +8,7 @@ var router = express.Router();
 /**
  * Get all semesters
  * @route Get /api/semester/
- * @group semester - Operations about semesters
+ * @group Semesters - Operations about semesters
  * @returns {Array} 200 
  * @returns {Error}  default - Unexpected error
  */
@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
 /**
  * Add a semester
  * @route POST /api/semester/
- * @group semester - Operations about semesters
+ * @group Semesters - Operations about semesters
  * @param {string} semester.body.required - year of the semester
  * @returns {boolean} 200 
  * @returns {Error}  default - Unexpected error
