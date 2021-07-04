@@ -1,0 +1,41 @@
+/*!
+
+=========================================================
+* Vue GlassMorphism design system
+=========================================================
+
+* Product Page: 
+* Copyright 2021 Mathis Figuet
+* Licensed under MIT 
+
+* Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+// Variables
+@import "@/styles/variables.scss";
+
+// Bootstarp
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'bootstrap-vue/src/index.scss';
+
+// Reset
+@import "@/styles/reset.scss";
+
+// Custom composed components
+@import "@/styles/components/shared/_home.scss";
+@import "@/styles/components/global/_app.scss";
+@import "@/styles/components/global/_navbar.scss";
+@import "@/styles/components/global/_section.scss";
+
+// Custom basic components
+@import "@/styles/components/base/_heading.scss";
+@import "@/styles/components/base/_card.scss";
+@import "@/styles/components/base/_icon.scss";
+@import "@/styles/components/base/_button.scss";
+@import "@/styles/components/base/_carousel.scss";
+

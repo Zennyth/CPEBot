@@ -1,0 +1,15 @@
+.carousel * {
+    color: $text-primary !important;
+}
+
+.carousel-caption, .carousel-item {
+    height: 100%;
+}
+
+.carousel-inner {
+    padding-bottom: $spacer;
+
+    @include media-breakpoint-down(sm) { 
+        padding-bottom: 20%;
+    }
+}

@@ -1,0 +1,64 @@
+#app {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 0;
+    background: rgba( 10, 10, 10, 0.8 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur( 4px );
+    overflow: overlay;
+}
+
+
+#background {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+
+    .background-gradient {
+        z-index: -1000;
+        background-color: #000000;
+        width: 250vw;
+        height: 250vh;
+        position: relative;
+
+        > div.circle {
+            z-index: -999;
+            width: 250vw;
+            height: 250vw;
+            border-radius: 50%;
+            //background: linear-gradient(135deg, rgba(135,147,255,1) 0%, rgba(184,232,231,1) 100%);
+            position: absolute;
+            z-index: -999;
+            
+            &:nth-child(1) {
+                top: calc(-85vw);
+                left: calc(-125vw);
+
+                background: radial-gradient(circle, rgba(255,158,170,1) 0%, transparent 80%);
+            }
+            
+            &:nth-child(2) {
+                top: 60vh;
+                left: calc(-125vw);
+
+                background: radial-gradient(circle, #6a33fc 0%, transparent 80%);
+            }
+
+            &:nth-child(3) {
+                top: 30vh;
+                left: 200px;
+                background: radial-gradient(circle, rgba(234,178,242,1) 0%, transparent 100%);
+            }
+        }
+    }
+}
+
+#web {
+    position: relative;
+}

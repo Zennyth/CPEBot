@@ -1,0 +1,25 @@
+$border-radius: 20px;
+$text-primary: white;
+$text-secondary: rgb(66,67,107);
+
+// Colors
+$primary: #ffbec6;
+$secondary: #ac40ff;
+
+// Glass Design
+$box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+$glass-background: rgba( 255, 255, 255, 0.1 );
+$glass-blur: blur( 4px );
+$glass-border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+// Card
+$card-box-shadow: $box-shadow;
+$card-glass-background: $glass-background;
+$card-glass-blur: $glass-blur;
+$card-glass-border: $glass-border;
+
+// Icon
+$icon-box-shadow: $box-shadow;
+$icon-glass-background: $glass-background;
+$icon-glass-blur: $glass-blur;
+$icon-glass-border: $glass-border;

@@ -1,0 +1,17 @@
+.icon {
+    background: $card-glass-background;
+    backdrop-filter: $card-glass-blur;
+    -webkit-backdrop-filter: $card-glass-blur;
+    border: $card-glass-border;
+
+    padding: 1em;
+    border-radius: 10px;
+    width: 100%;
+    line-height: 0;
+
+    svg::after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+}
