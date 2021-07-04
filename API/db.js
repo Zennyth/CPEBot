@@ -60,6 +60,6 @@ module.exports = {
     init: async () => {
         await syncModels();
         await initial();
-        sequelize.options.logging = true;
+       //sequelize.options.logging = true;
     }
 };

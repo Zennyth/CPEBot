@@ -8,6 +8,7 @@ class GradeMapper {
             mark : grade.numbergrade,
             coeff : grade.coeffgrade,
             type: grade.typegrade,
+            rank : grade.rankgrade
         } : null;
     }
     static toModel (gradeDto) {
@@ -19,6 +20,7 @@ class GradeMapper {
             numbergrade : gradeDto.mark,
             coeffgrade : gradeDto.coeff,
             typegrade: gradeDto.type,
+            rankgrade : gradeDto.rank
         }  
     }
 }
