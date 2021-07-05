@@ -9,7 +9,7 @@ export default {
             store.dispatch('saveGrades', response.data);
             return response.data;
         } else {
-            return undefined;
+            return [];
         }
     }
 }

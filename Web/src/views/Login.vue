@@ -5,12 +5,52 @@
             <h1>Login</h1>
             <Card variant="glass">
                 <template>
+                  <!--
                     <p>Mail :</p>
                     <b-form-input v-model="mail" placeholder="Enter your mail" type="email"/>
                     <p>Password :</p>
                     <b-form-input v-model="password" placeholder="Enter your Password" type="password"/>
                     <br>
-                    <b-button variant="primary" class="w-100" @click="login">Login</b-button>
+                    <b-button variant="primary" class="w-100" @click="login">Login</b-button>-->
+                    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+                    <b-form @submit.stop.prevent="handleSubmit(login)">
+                      <validation-provider
+                        name="Mail"
+                        :rules="{email: true, required: true}"
+                        v-slot="validationContext"
+                      >
+                        <b-form-group id="example-input-group-1" label="Mail" label-for="example-input-1">
+                          <b-form-input
+                            id="example-input-1"
+                            name="example-input-1"
+                            v-model="form.mail"
+                            :state="getValidationState(validationContext)"
+                            aria-describedby="input-1-live-feedback"
+                          ></b-form-input>
+
+                          <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                      </validation-provider>
+
+                      <validation-provider name="Password" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-2" label="Password" label-for="example-input-2">
+                          <b-form-input
+                            id="example-input-2"
+                            name="example-input-2"
+                            v-model="form.password"
+                            :state="getValidationState(validationContext)"
+                            aria-describedby="input-2-live-feedback"
+                            type="password"
+                          ></b-form-input>
+
+                          <b-form-invalid-feedback id="input-2-live-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                      </validation-provider>
+
+                      <br>
+                      <b-button type="submit" variant="primary" class="w-100">Login</b-button>
+                    </b-form>
+                  </validation-observer>
                 </template>
             </Card>
         </section>
@@ -20,39 +60,38 @@
 </template>
 
 <script>
-
-import helper from "@/helpers/check.helper";
 import userService from "@/services/user.service";
-import gradeService from "@/services/grade.service";
 
 export default {
   name: 'Login',
   data: () => {
     return {
-      mail: '',
-      password: ''
+      form: {
+        mail: null,
+        password: null
+      }
     } 
   },
   components: {
     Card: () => import("@/components/shared/Card"),
   },
   async mounted () {
-    await userService.login('mathis.figuet@cpe.fr', 'O45fWIE4');
-    if(this.$store.getters.isLoggedIn) {
-      const grades = await gradeService.getAll();
-      console.log(grades);
-    }
   },
   methods: {
-    login: function() {
-      if(!helper.checkEmail(this.mail)) {
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
+    },
+    login: async function() {
+      try {
+        await userService.login(this.form.mail, this.form.password);
+      } catch (err) {
         this.$notify({
           group: 'global',
           type: 'alert-danger',
           title: 'Login error',
-          text: 'Email address must be valid !',
+          text: err,
           ignoreDuplicates: true
-        });
+        })
       }
     }
   }
