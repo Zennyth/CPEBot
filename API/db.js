@@ -19,6 +19,7 @@ const syncModels = async () => {
     await models.sector.sync({ force: true });
     await models.student.sync({ force: true });
     await models.grade.sync({ force: true });
+    await models.rank.sync({ force: true });
 }
 
 const initial = async () => {
@@ -60,6 +61,6 @@ module.exports = {
     init: async () => {
         await syncModels();
         await initial();
-       //sequelize.options.logging = true;
+        // sequelize.options.logging = true;
     }
 };

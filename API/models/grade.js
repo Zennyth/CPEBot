@@ -35,8 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     typegrade: {
       type: DataTypes.STRING(50),
-      allowNull: false,
-      primaryKey: false
+      allowNull: false
     },
     numbergrade: {
       type: DataTypes.DECIMAL,

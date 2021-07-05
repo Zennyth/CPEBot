@@ -2,6 +2,7 @@ var DataTypes = require("sequelize").DataTypes;
 var _grade = require("./grade");
 var _module = require("./module");
 var _promotion = require("./promotion");
+var _rank = require("./rank");
 var _sector = require("./sector");
 var _semester = require("./semester");
 var _student = require("./student");
@@ -10,6 +11,7 @@ function initModels(sequelize) {
   var grade = _grade(sequelize, DataTypes);
   var module = _module(sequelize, DataTypes);
   var promotion = _promotion(sequelize, DataTypes);
+  var rank = _rank(sequelize, DataTypes);
   var sector = _sector(sequelize, DataTypes);
   var semester = _semester(sequelize, DataTypes);
   var student = _student(sequelize, DataTypes);
@@ -29,6 +31,7 @@ function initModels(sequelize) {
     grade,
     module,
     promotion,
+    rank,
     sector,
     semester,
     student,
