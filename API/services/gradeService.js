@@ -5,6 +5,7 @@ const { reducer } = require('../helpers/utils');
 
 const moduleService = require('./moduleService');
 const grade = require('../models/grade');
+const rankService = require('./rankService');
 
 module.exports = {
     getByPK: async (idsemester, idstudent, idmodule, lblgrade) => {
@@ -48,11 +49,14 @@ module.exports = {
             var moduleN = semester.modules.find(moduleNested => moduleNested.id == grade.idModule);
             if(!moduleN) {
                 let moduleDto = await moduleService.getByID(grade.idModule);
+                let rankDto = await rankService.getByPK(grade.idSemester,grade.idStudent,grade.idModule)
                 moduleN = {
                     id: grade.idModule,
                     label: moduleDto.label,
-                    notes: []
+                    notes: [],
+                    rank: rankDto.rank
                 }
+                console.log(moduleN)
                 semester.modules.push(moduleN)
             }
 

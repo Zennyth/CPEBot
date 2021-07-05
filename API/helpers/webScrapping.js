@@ -1,5 +1,6 @@
 const studentService = require('../services/studentService');
 const gradeService = require('../services/gradeService');
+const rankService = require('../services/rankService');
 const moduleService = require('../services/moduleService');
 const semesterService = require('../services/semesterService');
 
@@ -31,12 +32,12 @@ const getBornFromTwoElements = async (array, arrayToSplit) => {
         for(var [i, element] of array.entries()) {
             if(i == 0) {
                 // First Element
-                element.childElements = arrayToSplit.slice(array[0].index, array[1].index - 1);
+                element.childElements = arrayToSplit.slice(array[0].index, array[1].index);
             } else if(i == array.length - 1) {
                 // Last Element
-                element.childElements = arrayToSplit.slice(array[array.length - 1].index, arrayToSplit.length - 1);
+                element.childElements = arrayToSplit.slice(array[array.length - 1].index, arrayToSplit.length);
             } else {
-                element.childElements = arrayToSplit.slice(array[i].index, array[parseInt(i)+1].index - 1);
+                element.childElements = arrayToSplit.slice(array[i].index, array[parseInt(i)+1].index);
             }
         }
     }
@@ -97,7 +98,7 @@ const getModulesFromSemesters = async (semesters) => {
 
         for(const [indexChild, child] of semester.childElements.entries()) {
             const elem = await child.$('<th>');
-            if(!elem.error) {
+            if(!elem.error) {  
                 semester.modules.push({
                     index: indexChild,
                     label: await elem.getText()
@@ -131,7 +132,7 @@ const getSemesters = async (trs, semesters) => {
                     id : await label.getText(),
                     index: index
                 });
-                break;
+                // test with break
             }
         }
     }
@@ -140,7 +141,7 @@ const getSemesters = async (trs, semesters) => {
         id: 'Projet',
         index: 0
     });
-
+    
     await getBornFromTwoElements(parser, trs);
 
     return parser;
@@ -189,10 +190,32 @@ const setNestedSemestersModulesGrades = async (nestedSemesters) => {
                 try {
                     modelGrade = await gradeService.add(nestedGrade);
                 } catch (error) {
-                    console.log(error)
                     modelGrade = await gradeService.getByPK(nestedGrade.idSemester, nestedGrade.idStudent, nestedGrade.idModule, nestedGrade.label);
                 }
             }
+
+            let newRank = {
+                idStudent: current_user.idstudent,
+                idSemester: modelSemester.idsemester,
+                idModule: modelModule.idmodules
+            };
+            
+            if (nestedModule.rank)
+            {
+                newRank.rank = nestedModule.rank;
+            }
+            else {
+                newRank.rank = '';
+            }
+
+            try {
+                rankGrade = await rankService.add(newRank);
+
+            }
+            catch(error) {
+                rankGrade = await rankService.getByPK(newRank.idSemester, newRank.idStudent, newRank.idModule);
+            }
+            
         }
     }
 };
