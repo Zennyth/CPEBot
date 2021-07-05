@@ -146,35 +146,6 @@ const getSemesters = async (trs, semesters) => {
     return parser;
 }
 
-const login = async (user = null) => {
-    if(user != null) {
-        if(user.mailstudent != current_user.mailstudent) {
-            await browser.url(logoutUrl); // Logout before login in
-            await browser.deleteCookies();
-            await browser.reloadSession();
-        }
-        current_user = user; // In case the user has changed his crendentials
-    }
-
-    console.log(current_user);
-
-    await browser.url(loginUrl); 
-
-    const username = await browser.$('[name="username"]');
-    await username.setValue(current_user.mailstudent);
-    const password = await browser.$('[name="password"]');
-    await password.setValue(aes.decrypt(current_user.passwordstudent));
-    const submit = await browser.$('[name="submit"]');
-    await submit.click();
-
-    const confirmation = await browser.$('.success'); // Check if the crendetials were valid
-    if(!confirmation.error) console.log("Login successfull !");
-    else {
-        await browser.url(logoutUrl);
-        throw "Invalid Credentials"; 
-    }
-};
-
 const getGrades = async () => {
     await browser.url(gradesUrl);
 
@@ -227,7 +198,7 @@ const setNestedSemestersModulesGrades = async (nestedSemesters) => {
 };
 
 const checkNewGrades = async (student = null) => {
-    await login(student);
+    await module.exports.login(student);
 
     const currentGradesLabel = getLabelGradesFromSemesters(await gradeService.getAllGradesByUser(current_user.idstudent));
     //console.log("WebScrapping / checkNewGrades (current grades label): ", currentGradesLabel.length);
@@ -262,7 +233,7 @@ module.exports =  {
             capabilities: {
                 browserName: 'chrome'
             },
-            logLevel: "error"
+            logLevel: "error",
         });
     },
     checkNewGradesByPromotionAndSector: async () => {
@@ -279,5 +250,33 @@ module.exports =  {
                 }
             }
         }
-    }
+    },
+    login: async (user = null) => {
+        if(user != null) {
+            if(user.mailstudent != current_user.mailstudent) {
+                await browser.url(logoutUrl); // Logout before login in
+                await browser.deleteCookies();
+                await browser.reloadSession();
+            }
+            current_user = user; // In case the user has changed his crendentials
+        }
+    
+        console.log(current_user);
+    
+        await browser.url(loginUrl); 
+    
+        const username = await browser.$('[name="username"]');
+        await username.setValue(current_user.mailstudent);
+        const password = await browser.$('[name="password"]');
+        await password.setValue(aes.decrypt(current_user.passwordstudent));
+        const submit = await browser.$('[name="submit"]');
+        await submit.click();
+        
+        const confirmation = await browser.$$('.success'); // Check if the crendetials were valid
+        if(confirmation.length > 0) console.log("Login successfull !");
+        else {
+            await browser.url(logoutUrl);
+            throw "Invalid Credentials"; 
+        }
+    },
 };

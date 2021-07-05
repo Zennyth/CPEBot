@@ -11,5 +11,8 @@ module.exports = {
         return await models.sector.create({
             lblsector: sector.label
         });
-    }
+    },
+    getByLabel: async (label) => {
+        return await models.sector.findOne({ where: { lblsector: label }, raw: true });
+    },
 }

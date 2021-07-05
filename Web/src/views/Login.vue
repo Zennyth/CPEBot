@@ -5,14 +5,7 @@
             <h1>Login</h1>
             <Card variant="glass">
                 <template>
-                  <!--
-                    <p>Mail :</p>
-                    <b-form-input v-model="mail" placeholder="Enter your mail" type="email"/>
-                    <p>Password :</p>
-                    <b-form-input v-model="password" placeholder="Enter your Password" type="password"/>
-                    <br>
-                    <b-button variant="primary" class="w-100" @click="login">Login</b-button>-->
-                    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+                  <validation-observer ref="observer" v-slot="{ handleSubmit }">
                     <b-form @submit.stop.prevent="handleSubmit(login)">
                       <validation-provider
                         name="Mail"
@@ -84,6 +77,7 @@ export default {
     login: async function() {
       try {
         await userService.login(this.form.mail, this.form.password);
+        this.$router.push({name: "Grades"});
       } catch (err) {
         this.$notify({
           group: 'global',

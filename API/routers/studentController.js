@@ -52,16 +52,15 @@ router.get('/', [authJwt.verifyToken], function (req, res) {
 router.post('/signup', async function (req, res) {
   /*test {
     "yearpromotion": "2020-09-01",
-    "idsector": 1,
+    "lblsector": "IRC",
     "mail": "mathis.figuet@cpe.fr",
     "pseudo": "zennyth",
     "password": "test"
   }*/
   
   try {
-    const newStudent =await studentService.add(req.body);
-    await ws.checkNewGradesByUser(newStudent)
-    res.send(newStudent)
+    const response = await studentService.add(req.body);
+    res.send(response);
   } catch (err) {
     res.status(500);
     res.json({ error: err });

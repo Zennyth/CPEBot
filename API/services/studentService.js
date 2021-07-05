@@ -3,6 +3,7 @@ const StudentMapper = require('../mappers/studentMapper');
 const aes = require('../helpers/aes');
 const crypto = require("crypto");
 const { userInfo } = require('os');
+const sectorService = require("./sectorService");
 
 module.exports = {
     listAll: async () => {
@@ -53,14 +54,27 @@ module.exports = {
             throw "This mail is already used by another student.";
         }
 
+        const sector = await sectorService.getByLabel(studentDto.lblsector);
+        if(!sector) {
+            throw "You need a valid sector to register.";
+        }
+        studentDto.idsector = sector.idsector;
+        studentDto.yearpromotion += "-09-01";
+
+
         let studentModel = StudentMapper.toModel(studentDto);
         studentModel.passwordstudent = aes.encrypt(studentModel.passwordstudent);
 
 
         // Login in
         studentModel.tokenlogstudent = crypto.randomBytes(20).toString('hex');
-        
-        return await models.student.create(studentModel);
+
+        const newStudent = await models.student.create(studentModel);
+
+        return {
+            successfull: true,
+            token: studentModel.tokenlogstudent
+        };
     },
     login: async (studentDto) => {
         console.log('Service / UserDto = ', studentDto);

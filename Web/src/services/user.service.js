@@ -11,7 +11,20 @@ export default {
         if(response && response.data.successfull) {
             axios.defaults.headers['x-access-token'] = response.data.token;
             store.dispatch('login', response.data.token);
-            console.log(store.getters.isLoggedIn);
+        }
+    },
+    signUp: async (student) => {
+        try {
+            const response = await axios.post('/student/signup', student);
+            if(response && response.data) {
+                axios.defaults.headers['x-access-token'] = response.data.token;
+                store.dispatch('login', response.data.token);
+                return true;
+            } else return false;   
+        } catch (error) {
+            return {
+                error: error,
+            }
         }
     }
 }

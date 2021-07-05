@@ -34,6 +34,12 @@ const initial = async () => {
     await models.sector.create({
         "lblsector": "ICS"
     });
+    await models.sector.create({
+        "lblsector": "CGP"
+    });
+    await models.sector.create({
+        "lblsector": "ETI"
+    });
     await models.semester.create({
         idsemester: "SEMESTRE 5"
     });
