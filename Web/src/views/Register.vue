@@ -104,11 +104,11 @@ export default {
   data: () => {
     return {
       form: {
-        mail: 'mathis.test@cpe.fr',
-        password: 'azeazeaze',
-        yearpromotion: '2020',
-        pseudo: 'test',
-        lblsector: 'IRC'
+        mail: '',
+        password: '',
+        yearpromotion: '',
+        pseudo: '',
+        lblsector: ''
       },
       promotions: [],
       sectors: []

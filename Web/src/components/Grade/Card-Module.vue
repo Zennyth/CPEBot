@@ -1,10 +1,14 @@
 <template>
   <div class="card" :class="classComputed">
-    <div class="card-header p-0">
-      <h6 class="mb-0.25">{{moduleN.label}}</h6>
+    <div class="card-header p-0 flex-column" style="margin-bottom: 1em;">
+      <span>{{moduleN.rank}}</span>
+      <h6>{{moduleN.label}}</h6>
     </div>
     <b-col class="p-0">
-      <CardGrade v-for="(grade, index) of moduleN.notes" :key="index" :grade="grade" variant="transparent" />
+      <div v-for="(subject, index) of moduleN.subjects" :key="index" style="margin-bottom: .75em;">
+        <h7 class="subject">{{subject.label.replace(/[0-9]/g, '').toLowerCase()}}</h7>
+        <CardGrade v-for="(grade, index) of subject.notes" :key="index" :grade="grade" variant="transparent" />
+      </div>
     </b-col>
   </div>
 </template>
@@ -40,3 +44,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.subject {
+  color: #bebebe;
+  text-transform: capitalize;
+}
+
+</style>

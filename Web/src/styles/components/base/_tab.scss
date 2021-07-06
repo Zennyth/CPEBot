@@ -1,0 +1,18 @@
+.nav-tabs {
+    border: none;
+    justify-content: flex-end;
+    .nav-item {
+        .active {
+            background: transparent;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border: none;
+            border-bottom: solid 1px $primary;
+            color: $primary !important;
+        }
+
+        a {
+            color: $text-secondary !important;
+        }
+    }
+} 

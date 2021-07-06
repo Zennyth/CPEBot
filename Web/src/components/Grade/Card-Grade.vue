@@ -6,9 +6,9 @@
     <b-col class="p-0">
       <p>{{grade.label}}</p>
       <div class="agrades">
-        <p>{{grade.type}}</p>
-        <p>{{grade.mark}}/20</p>
-        <p>{{grade.coeff}}%</p>
+        <p class="type">{{grade.type}}</p>
+        <p class="coeff">{{grade.coeff}}%</p>
+        <p class="mark1" :class="aboveAverage ? 'successfull' : 'failed'">{{grade.mark}}/20</p>
       </div>
     </b-col>
   </div>
@@ -38,6 +38,9 @@ export default {
     },
     hasFooterSlot () {
       return !!this.$slots['footer'];
+    },
+    aboveAverage() {
+      return this.grade.mark >= 10;
     }
   }
 }
@@ -46,7 +49,14 @@ export default {
 <style scoped lang="scss">
 .agrades {
   display: flex;
-  justify-content: space-between;
+
+  .type {
+    width: 60%;
+  }
+  .mark1, .coeff {
+    width: 20%;
+    text-align: right;
+  }
 }
 .card {
   margin-bottom: 0.25em;
