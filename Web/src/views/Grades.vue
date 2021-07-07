@@ -7,7 +7,9 @@
           <b-tab title="All" active>
             <Tree :array="nestedSemesters"/>
           </b-tab>
-          <b-tab title="Recent"><p>I'm the second tab</p></b-tab>
+          <b-tab title="Recent">
+            
+          </b-tab>
         </b-tabs>
       </section>
     </b-col>

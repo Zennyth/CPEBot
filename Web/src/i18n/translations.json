@@ -1,0 +1,39 @@
+{
+    "en": {
+        "register": {
+            "mail": "Mail",
+            "password": "Password",
+            "pseudo": "Pseudo",
+            "promotion": "Promotion",
+            "sector": "Sector",
+            "register": "Register",
+            "toLogin": "You already have an account ? ",
+            "login": "Login"
+        },
+        "login": {
+            "mail": "Mail",
+            "password": "Password",
+            "toRegister": "Dont have an account ? ",
+            "register": "Register"
+        }
+    },
+    "fr": {
+        "register": {
+            "mail": "Adresse mail",
+            "password": "Mot de passe",
+            "pseudo": "Pseudo",
+            "promotion": "Promotion",
+            "sector": "Filière",
+            "register": "Créer un compte",
+            "toLogin": "Vous avez déjà un compte ? ",
+            "login": "Se connecter"
+        },
+        "login": {
+            "login": "Se connecter",
+            "mail": "Adresse mail",
+            "password": "Mot de passe",
+            "toRegister": "Vous n'avez pas de compte ? ",
+            "register": "Créer votre compte"
+        }
+    }
+}

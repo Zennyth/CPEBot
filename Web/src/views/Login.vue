@@ -2,17 +2,17 @@
   <div class="login">
     <b-col>
         <section>
-            <h1>Login</h1>
+            <h1>{{$t('login.login')}}</h1>
             <Card variant="glass">
                 <template>
                   <validation-observer ref="observer" v-slot="{ handleSubmit }">
                     <b-form @submit.stop.prevent="handleSubmit(login)">
                       <validation-provider
-                        name="Mail"
+                        :name="$t('login.mail')"
                         :rules="{email: true, required: true}"
                         v-slot="validationContext"
                       >
-                        <b-form-group id="example-input-group-1" label="Mail" label-for="example-input-1">
+                        <b-form-group id="example-input-group-1" :label="$t('login.mail')" label-for="example-input-1">
                           <b-form-input
                             id="example-input-1"
                             name="example-input-1"
@@ -25,8 +25,8 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider name="Password" :rules="{ required: true }" v-slot="validationContext">
-                        <b-form-group id="example-input-group-2" label="Password" label-for="example-input-2">
+                      <validation-provider :name="$t('login.password')" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-2" :label="$t('login.password')" label-for="example-input-2">
                           <b-form-input
                             id="example-input-2"
                             name="example-input-2"
@@ -41,14 +41,14 @@
                       </validation-provider>
 
                       <br>
-                      <b-button type="submit" variant="primary" class="w-100">Login</b-button>
+                      <b-button type="submit" variant="primary" class="w-100">{{$t('login.login')}}</b-button>
                     </b-form>
                   </validation-observer>
                 </template>
             </Card>
         </section>
     </b-col>
-    <span class="absolute">Dont have an account ? <router-link to="register">Register</router-link></span>
+    <span class="absolute">{{$t('login.toRegister')}}<router-link to="register">{{$t('login.register')}}</router-link></span>
   </div>
 </template>
 

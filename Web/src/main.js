@@ -13,22 +13,11 @@ Vue.use(GlassMorphism);
 import VueI18n from "vue-i18n";
 Vue.use(VueI18n);
 // Ready translated locale messages
-const messages = {
-  en: {
-    message: {
-      hello: 'hello world'
-    }
-  },
-  ja: {
-    message: {
-      hello: 'こんにちは、世界'
-    }
-  }
-}
+const trad = require("@/i18n/translations.json");
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'en', // set locale
-  messages, // set locale messages
+  locale: 'fr', // set locale
+  messages: trad, // set locale messages
 })
 
 

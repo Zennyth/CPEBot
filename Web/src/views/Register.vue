@@ -2,16 +2,16 @@
   <div class="login">
     <b-col>
         <section>
-            <h1>Register</h1>
+            <h1>{{$t('register.register')}}</h1>
             <Card variant="glass">
                 <validation-observer ref="observer" v-slot="{ handleSubmit }">
                     <b-form @submit.stop.prevent="handleSubmit(register)">
                       <validation-provider
-                        name="Mail"
+                        :name="$t('register.mail')"
                         :rules="{email: true, required: true}"
                         v-slot="validationContext"
                       >
-                        <b-form-group id="example-input-group-1" label="Mail" label-for="example-input-1">
+                        <b-form-group id="example-input-group-1" :label="$t('register.mail')" label-for="example-input-1">
                           <b-form-input
                             id="example-input-1"
                             name="example-input-1"
@@ -24,8 +24,8 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider name="Password" :rules="{ required: true }" v-slot="validationContext">
-                        <b-form-group id="example-input-group-2" label="Password" label-for="example-input-2">
+                      <validation-provider :name="$t('register.password')" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-2" :label="$t('register.password')" label-for="example-input-2">
                           <b-form-input
                             id="example-input-2"
                             name="example-input-2"
@@ -39,8 +39,8 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider name="Pseudo" :rules="{ required: true }" v-slot="validationContext">
-                        <b-form-group id="example-input-group-5" label="Pseudo" label-for="example-input-5">
+                      <validation-provider :name="$t('register.pseudo')" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-5" :label="$t('register.pseudo')" label-for="example-input-5">
                           <b-form-input
                             id="example-input-5"
                             name="example-input-5"
@@ -53,8 +53,8 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider name="Promotion" :rules="{ required: true }" v-slot="validationContext">
-                        <b-form-group id="example-input-group-3" label="Promotion" label-for="example-input-3">
+                      <validation-provider :name="$t('register.promotion')" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-3" :label="$t('register.promotion')" label-for="example-input-3">
                           <b-form-select
                             id="example-input-3"
                             name="example-input-3"
@@ -68,8 +68,8 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider name="Sector" :rules="{ required: true }" v-slot="validationContext">
-                        <b-form-group id="example-input-group-4" label="Sector" label-for="example-input-3">
+                      <validation-provider :name="$t('register.sector')" :rules="{ required: true }" v-slot="validationContext">
+                        <b-form-group id="example-input-group-4" :label="$t('register.sector')" label-for="example-input-3">
                           <b-form-select
                             id="example-input-4"
                             name="example-input-4"
@@ -84,13 +84,13 @@
                       </validation-provider>
 
                       <br>
-                      <b-button type="submit" variant="primary" class="w-100">Register</b-button>
+                      <b-button type="submit" variant="primary" class="w-100">{{$t('register.register')}}</b-button>
                     </b-form>
                 </validation-observer>
             </Card>
         </section>
     </b-col>
-    <span class="absolute">You already have an account ? <router-link to="login">Login</router-link></span>
+    <span class="absolute">{{$t('register.toLogin')}}<router-link to="login">{{$t('register.login')}}</router-link></span>
   </div>
 </template>
 
