@@ -273,7 +273,7 @@ module.exports =  {
             }
         }
     },
-    login: async (user = null) => {
+    login: async (user = null, dto = false) => {
         if(user != null) {
             if(user.mailstudent != current_user.mailstudent) {
                 await browser.url(logoutUrl); // Logout before login in
@@ -290,7 +290,7 @@ module.exports =  {
         const username = await browser.$('[name="username"]');
         await username.setValue(current_user.mailstudent);
         const password = await browser.$('[name="password"]');
-        await password.setValue(aes.decrypt(current_user.passwordstudent));
+        await password.setValue(dto ? aes.decrypt(current_user.passwordstudent) :current_user.passwordstudent);
         const submit = await browser.$('[name="submit"]');
         await submit.click();
         

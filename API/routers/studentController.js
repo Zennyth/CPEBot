@@ -57,14 +57,22 @@ router.post('/signup', async function (req, res) {
     "pseudo": "zennyth",
     "password": "test"
   }*/
+  const studentDto = req.body;
   
   try {
-    const response = await studentService.add(req.body);
-    res.send(response);
-  } catch (err) {
-    console.log(err)
-    res.status(500);
-    res.json({ error: err });
+    await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password});
+    try {
+      const response = await studentService.add(studentDto);
+      res.send(response);
+    } catch (err) {
+      console.log(err)
+      res.status(500);
+      res.json({ error: err });
+    }
+  } catch(err) {
+    console.log("Login error", err);
+    res.status(403);
+    res.json({ error: "Your combination mail/password is not allowed to log on CPE website." });
   }
 });
 
@@ -81,9 +89,15 @@ router.post('/signup', async function (req, res) {
     "mail": "mathis.figuet@cpe.fr",
     "password": "password"
   }*/
-  
+  const studentDto = req.body;
   try {
-    res.send(await studentService.login(req.body));
+    await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password});
+  } catch(err) {
+    console.log("Login error", err);
+  }
+
+  try {
+    res.send(await studentService.login(studentDto));
   } catch (err) {
     res.status(500);
     res.json({ error: err || "Unkwnokwn Error"});

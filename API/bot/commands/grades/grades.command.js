@@ -7,7 +7,9 @@ module.exports = {
     aliases: ['grades'],
 	usage: '[user]',
     cooldown: 60,
-	execute(message, args, client) {
-        console.log("azeazeaze");
+	async execute(message, args, client) {
+		const grades = await gradeService.getAllGradesByUser(1);
+		message.reply(grades);
+		console.log("Commands / ", grades);
 	},
 };

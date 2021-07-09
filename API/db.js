@@ -50,7 +50,7 @@ const initial = async () => {
         "idsector": 1,
         "mailstudent": "mathis.figuet@cpe.fr",
         "pseudostudent": "zennyth",
-        "passwordstudent": aes.encrypt("O45fWIE4")
+        "passwordstudent": aes.encrypt("O45fWIE4.")
     });
     await models.student.create({
         "yearpromotion": "2020-09-01",
