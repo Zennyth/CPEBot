@@ -8,7 +8,7 @@
             <Tree :array="nestedSemesters"/>
           </b-tab>
           <b-tab title="Recent">
-            
+             <Recent :nbGrades="10" />
           </b-tab>
         </b-tabs>
       </section>
@@ -18,13 +18,14 @@
 
 <script>
 import Tree from "@/components/shared/Tree";
-
+import Recent from "@/components/shared/Recent"
 import gradeService from "@/services/grade.service";
 
 export default {
   name: 'Grades',
   components: {
-    Tree
+    Tree,
+    Recent
   },
   data() {
     return {

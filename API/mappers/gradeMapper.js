@@ -7,7 +7,8 @@ class GradeMapper {
             label: grade.lblgrade,
             mark : grade.numbergrade,
             coeff : grade.coeffgrade,
-            type: grade.typegrade
+            type: grade.typegrade,
+            timestamp : grade.updatedAt
         } : null;
     }
     static toModel (gradeDto) {
@@ -18,7 +19,7 @@ class GradeMapper {
             lblgrade: gradeDto.lblgrade || gradeDto.label,
             numbergrade : gradeDto.mark,
             coeffgrade : gradeDto.coeff,
-            typegrade: gradeDto.type
+            typegrade: gradeDto.type,
         }  
     }
 }

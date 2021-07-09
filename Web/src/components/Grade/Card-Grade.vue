@@ -26,6 +26,10 @@ export default {
     grade: {
       type: Object,
       required: true
+    },
+    isRecent: {
+      type:Boolean,
+      default:false
     }
   },
   computed: {

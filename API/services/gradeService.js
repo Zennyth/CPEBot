@@ -31,6 +31,16 @@ module.exports = {
         const grades = await models.grade.findAll({ where: { idstudent: id } });
         return grades.map(grade => GradeMapper.toDto(grade));
     },
+    getRecentGradesByUser: async(id,nbGrade) =>{
+        const grades = await models.grade.findAll({ 
+            where: { 
+                idstudent: id 
+            },
+            order:[['updatedAt','DESC']],
+            limit: nbGrade
+        });
+        return grades.map(grade => GradeMapper.toDto(grade));
+    },
     getAllGradesByModulesSemestersForUser: async (id) => {
         const grades = await module.exports.getAllGradesByUser(id);
         const nestedSemesters = [];
