@@ -290,7 +290,7 @@ module.exports =  {
         const username = await browser.$('[name="username"]');
         await username.setValue(current_user.mailstudent);
         const password = await browser.$('[name="password"]');
-        await password.setValue(dto ? aes.decrypt(current_user.passwordstudent) :current_user.passwordstudent);
+        await password.setValue(!dto ? aes.decrypt(current_user.passwordstudent) : current_user.passwordstudent);
         const submit = await browser.$('[name="submit"]');
         await submit.click();
         
