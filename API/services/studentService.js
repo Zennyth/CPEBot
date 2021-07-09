@@ -5,6 +5,8 @@ const crypto = require("crypto");
 const { userInfo } = require('os');
 const sectorService = require("./sectorService");
 
+const { create_channel } = require("../bot/bot");
+
 module.exports = {
     listAll: async () => {
         const students = await models.student.findAll();
@@ -70,6 +72,9 @@ module.exports = {
         studentModel.tokenlogstudent = crypto.randomBytes(20).toString('hex');
 
         const newStudent = await models.student.create(studentModel);
+
+        // Create channel
+        await create_channel(`${studentDto.lblsector.toLowerCase()}-${newStudent.yearpromotion.split('-')[0]}`);
 
         return {
             successfull: true,

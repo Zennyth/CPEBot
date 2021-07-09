@@ -1,3 +1,5 @@
+import router from "@/router";
+
 export default {
     state: () => ({ 
         token: null,
@@ -13,6 +15,8 @@ export default {
         },
         logout(context) {
             context.commit('modifyToken', null);
+            console.log(context.getters.isLoggedIn)
+            router.push({name: 'Login'})
         }
     },
     getters: {

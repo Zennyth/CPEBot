@@ -6,7 +6,7 @@
     </div>
     <b-col class="p-0">
       <div v-for="(subject, index) of moduleN.subjects" :key="index" style="margin-bottom: .75em;">
-        <h7 class="subject">{{subject.label.replace(/[0-9]/g, '').toLowerCase()}}</h7>
+        <p class="subject">{{subject.label.replace(/[0-9]/g, '').toLowerCase()}}</p>
         <CardGrade v-for="(grade, index) of subject.notes" :key="index" :grade="grade" variant="transparent" />
       </div>
     </b-col>
@@ -26,8 +26,8 @@ export default {
     },
     boxShadow: Boolean,
     moduleN: {
-        type: Object,
-        required: true
+      type: Object,
+      required: true
     }
   },
   computed: {

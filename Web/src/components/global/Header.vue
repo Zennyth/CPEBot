@@ -4,7 +4,11 @@
       <b-icon icon="gear" aria-hidden="true"></b-icon>
       <span>Settings</span>
     </router-link>
-    <router-link class="navbar-item" to="account" :class="route == 'Account' ? 'active' : ''">
+    <a class="navbar-item router-link-exact-active router-link-active" v-if="$store.getters.isLoggedIn" @click="$store.dispatch('logout')">
+      <b-icon icon="x" aria-hidden="true"></b-icon>
+      <span>Logout</span>
+    </a>
+    <router-link class="navbar-item" to="account" :class="route == 'Account' ? 'active' : ''" v-else>
       <b-icon icon="person" aria-hidden="true"></b-icon>
       <span>Account</span>
     </router-link>
