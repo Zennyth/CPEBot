@@ -1,9 +1,10 @@
 <template>
-  <div class="card" :class="classComputed">
+  <div class="card mb-2" :class="classComputed">
     <div class="card-header" v-if="hasHeaderSlot">
       <slot name="header"/>
-    </div>
+    </div>  
     <b-col class="p-0">
+      <div class="timestamp" v-if="isRecent"> {{formatWithLocalLanguage}}</div>
       <p>{{grade.label}}</p>
       <div class="agrades">
         <p class="type">{{grade.type}}</p>
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import helper from "@/helpers/format.helper"
 export default {
   name: 'Card',
   props: {
@@ -45,6 +47,10 @@ export default {
     },
     aboveAverage() {
       return this.grade.mark >= 10;
+    },
+    formatWithLocalLanguage() {
+      console.log(navigator)
+      return helper.formatWithLanguage(this.grade.timestamp,this.$i18n.locale)
     }
   }
 }

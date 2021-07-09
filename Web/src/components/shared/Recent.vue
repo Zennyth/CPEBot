@@ -1,6 +1,6 @@
 <template>
   <div class="recent">
-      <CardGrade v-for="(grade, index) of notes" :key="index" :grade="grade" variant="transparent" />
+      <CardGrade v-for="(grade, index) of notes" :key="index" :grade="grade" :isRecent="true" variant="transparent" />
   </div>
 </template>
 

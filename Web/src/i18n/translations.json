@@ -15,6 +15,9 @@
             "password": "Password",
             "toRegister": "Dont have an account ? ",
             "register": "Register"
+        },
+        "grades":{
+            "recent": "Your mark was updated at "
         }
     },
     "fr": {
@@ -34,6 +37,9 @@
             "password": "Mot de passe",
             "toRegister": "Vous n'avez pas de compte ? ",
             "register": "Créer votre compte"
+        },
+        "grades":{
+            "recent": "Votre note a été soumis le "
         }
     }
 }
