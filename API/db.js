@@ -44,6 +44,7 @@ const initial = async () => {
     await models.semester.create({
         idsemester: "SEMESTRE 5"
     });
+    
     await models.student.create({
         "yearpromotion": "2020-09-01",
         "idsector": 1,

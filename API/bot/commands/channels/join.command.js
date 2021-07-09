@@ -4,7 +4,7 @@ module.exports = {
 	name: 'join',
 	description: 'Join a channel based on your promotion and sector !',
     args: 1,
-    aliases: ['grades', 'notifications'],
+    aliases: ['notifications'],
 	usage: '[name of your sector]-[year of your promotion]',
     cooldown: 60,
 	execute(message, args, client) {

@@ -104,4 +104,3 @@ const backgroundTask = async () => {
 initWebScrapping().then(() => {
   backgroundTask();
 });
-

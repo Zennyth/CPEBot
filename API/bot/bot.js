@@ -12,7 +12,6 @@ const user = {
     sector: 'IRC'
 }
 
-
 const publicChannels = ['général', 'Salons textuels'];
 function getPrivateChannels(cache) {
     return cache.filter(ch => !publicChannels.includes(ch.name));
@@ -82,6 +81,7 @@ module.exports = {
 const fs = require('fs');
 const Discord = require('discord.js');
 const { discord } = require('../config');
+const { privateChannels, publicChannels } = require('./utils');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -152,3 +152,22 @@ client.on('ready', async () => {
 });
 
 client.login(discord.token);
+
+module.exports = {
+    create_channel: async function(channelName) {
+        console.log(channelName, client.channels.cache.map(ch => ch.name))
+        if(client.channels.cache.map(ch => ch.name).includes(channelName) == false) {
+            const group = client.channels.cache.find(ch => ch.name === publicChannels[1]);
+            const guild = group.guild;
+            const everyoneRole = guild.roles.everyone;
+            const channel = await guild.channels.create(channelName, {
+                type: 'text',
+                parent: group
+            });
+            await channel.overwritePermissions([
+                {type: 'member', id: client.user.id, allow: [Discord.Permissions.FLAGS.VIEW_CHANNEL]},
+                {type: 'role', id: everyoneRole.id, deny: [Discord.Permissions.FLAGS.VIEW_CHANNEL]},
+            ]);
+        }
+    }
+}

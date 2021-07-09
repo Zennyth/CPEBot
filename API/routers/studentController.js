@@ -62,6 +62,7 @@ router.post('/signup', async function (req, res) {
     const response = await studentService.add(req.body);
     res.send(response);
   } catch (err) {
+    console.log(err)
     res.status(500);
     res.json({ error: err });
   }
