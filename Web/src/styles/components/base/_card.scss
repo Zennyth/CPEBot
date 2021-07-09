@@ -4,7 +4,7 @@
     border-radius: $border-radius;
     width: 100%;
     border: none;
-
+    
     > div {
         padding: 1em;
 
@@ -79,7 +79,7 @@
     }
 }
 
-.successfull {
+.successfull, .timestamp {
     color: $secondary;
 }
 .failed {

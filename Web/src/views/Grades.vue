@@ -8,7 +8,7 @@
             <Tree :array="nestedSemesters"/>
           </b-tab>
           <b-tab title="Recent">
-             <Recent :nbGrades="10" />
+             <Recent :nbGrades="5" />
           </b-tab>
         </b-tabs>
       </section>

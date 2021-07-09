@@ -16,7 +16,7 @@ Vue.use(VueI18n);
 const trad = require("@/i18n/translations.json");
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'fr', // set locale
+  locale: navigator.language, // set locale
   messages: trad, // set locale messages
 })
 
@@ -39,7 +39,6 @@ Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
 
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,
