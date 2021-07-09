@@ -10,7 +10,7 @@
  */
  
  class GradeDto {
-    constructor(idModule,idStudent,idSemester,mark,label,coeff,type) {
+    constructor(idModule,idStudent,idSemester,mark,label,coeff,type,updatedAt) {
         this.idModule = idModule;
         this.idStudent = idStudent;
         this.idSemester = idSemester;
@@ -18,6 +18,7 @@
         this.mark = mark;
         this.coeff = coeff;
         this.label = label;
+        this.timestamp = updatedAt;
     }
 }
 

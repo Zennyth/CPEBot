@@ -11,5 +11,13 @@ export default {
         } else {
             return [];
         }
+    },
+    getRecent: async(nbGrades) => {
+        const response = await axios.get(`/grade/recent/${nbGrades}`);
+        if(response.data) {
+            return response.data;
+        } else {
+            return [];
+        }
     }
 }

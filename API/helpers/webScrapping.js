@@ -186,7 +186,6 @@ const setNestedSemestersModulesGrades = async (nestedSemesters) => {
                 nestedGrade.idStudent = current_user.idstudent;
                 nestedGrade.idSemester = modelSemester.idsemester;
                 nestedGrade.idModule = modelModule.idmodules;
-                
                 try {
                     modelGrade = await gradeService.add(nestedGrade);
                 } catch (error) {
