@@ -13,6 +13,13 @@ module.exports = {
         const students = await models.student.findAll();
         return students.map(student => StudentMapper.toDto(student));
     },
+    getIdByPseudo: async (pseudo) => {
+        return (await models.student.findOne({
+            where: {
+                pseudostudent: pseudo
+            }
+        })).idstudent;
+    },
     getAllPublicUsers: async () => {
         const students = await models.student.findAll({
             where:{

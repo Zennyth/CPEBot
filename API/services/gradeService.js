@@ -66,7 +66,6 @@ module.exports = {
                     notes: [],
                     rank: rankDto.rank
                 }
-                console.log(moduleN)
                 semester.modules.push(moduleN)
             }
 
