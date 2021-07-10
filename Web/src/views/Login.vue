@@ -83,7 +83,7 @@ export default {
           group: 'global',
           type: 'alert-danger',
           title: 'Login error',
-          text: err,
+          text: 'Wrong combination',
           ignoreDuplicates: true
         })
       }

@@ -139,14 +139,25 @@ export default {
     },
     async register() {
       const response = await userService.signUp(this.form);
+      //console.log({response});
       if(response.error) {
-        this.$notify({
-          group: 'global',
-          type: 'alert-danger',
-          title: 'Register error',
-          text: 'This student already exist.',
-          ignoreDuplicates: true
-        })
+        if(response.error?.response?.data) {
+          this.$notify({
+            group: 'global',
+            type: 'alert-danger',
+            title: 'Register error',
+            text: response.error.response.data.error,
+            ignoreDuplicates: true
+          });
+        } else {
+          this.$notify({
+            group: 'global',
+            type: 'alert-danger',
+            title: 'Register error',
+            text: 'This student already exist.',
+            ignoreDuplicates: true
+          });
+        }
       } else {
         this.$router.push({name: "Grades"});
       }

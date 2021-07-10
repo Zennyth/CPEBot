@@ -1,5 +1,8 @@
 {
     "en": {
+        "home": {
+            "home": "Home"
+        },
         "register": {
             "mail": "Mail",
             "password": "Password",
@@ -11,16 +14,30 @@
             "login": "Login"
         },
         "login": {
+            "login": "Logout",
+            "logout": "Logout",
             "mail": "Mail",
             "password": "Password",
             "toRegister": "Dont have an account ? ",
             "register": "Register"
         },
         "grades":{
+            "grades": "Grades",
             "recent": "Your mark was updated at "
+        },
+        "settings": {
+            "settings": "Settings",
+            "resetPassword": "Reset your password",
+            "actualPassword": "Actual password",
+            "newPassword": "New password",
+            "repeatPassword": "Repeat your password",
+            "sendNewPassword": "Change"
         }
     },
     "fr": {
+        "home": {
+            "home": "Accueil"
+        },
         "register": {
             "mail": "Adresse mail",
             "password": "Mot de passe",
@@ -33,13 +50,23 @@
         },
         "login": {
             "login": "Se connecter",
+            "logout": "Déconnexion",
             "mail": "Adresse mail",
             "password": "Mot de passe",
             "toRegister": "Vous n'avez pas de compte ? ",
             "register": "Créer votre compte"
         },
         "grades":{
+            "grades": "Notes",
             "recent": "Votre note a été soumis le "
+        },
+        "settings": {
+            "settings": "Réglages",
+            "resetPassword": "Changer de mot de passe",
+            "actualPassword": "Mot de passe actuel",
+            "newPassword": "Nouveau mot de passe",
+            "repeatPassword": "Répéter votre mot de passe",
+            "sendNewPassword": "Envoyer"
         }
     }
 }

@@ -49,9 +49,9 @@ const initial = async () => {
         "yearpromotion": "2020-09-01",
         "idsector": 1,
         "mailstudent": "mathis.figuet@cpe.fr",
-        "pseudostudent": "zennyth",
+        "pseudostudent": "499511666732433408",
         "passwordstudent": aes.encrypt("O45fWIE4")
-    });
+    }); 
     await models.student.create({
         "yearpromotion": "2020-09-01",
         "idsector": 1,

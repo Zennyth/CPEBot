@@ -10,6 +10,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
   },
   aesToken:process.env.AES_TOKEN,
+  saltRounds: process.env.SALT_ROUNDS,
   discord: {
     token: process.env.DISCORD_BOT_TOKEN,
     prefix: process.env.DISCORD_BOT_PREFIX

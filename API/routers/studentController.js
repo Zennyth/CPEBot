@@ -60,7 +60,7 @@ router.post('/signup', async function (req, res) {
   const studentDto = req.body;
   
   try {
-    await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password});
+    await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password}, true);
     try {
       const response = await studentService.add(studentDto);
       res.send(response);
@@ -70,9 +70,9 @@ router.post('/signup', async function (req, res) {
       res.json({ error: err });
     }
   } catch(err) {
-    console.log("Login error", err);
+    //console.log("Login error", err);
     res.status(403);
-    res.json({ error: "Your combination mail/password is not allowed to log on CPE website." });
+    res.json({ error: "Your combination mail/password is not allowed to log on CPE's website." });
   }
 });
 
@@ -80,7 +80,7 @@ router.post('/signup', async function (req, res) {
  * Login as a student
  * @route POST /api/student/login
  * @group Students - Operations about students
- * @param {string} student.body.required - student to be looges as
+ * @param {string} student.body.required - student to be loged as
  * @returns {boolean} 200 
  * @returns {Error}  default - Unexpected error
  */
@@ -90,14 +90,33 @@ router.post('/signup', async function (req, res) {
     "password": "password"
   }*/
   const studentDto = req.body;
-  try {
-    await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password});
-  } catch(err) {
-    console.log("Login error", err);
-  }
 
   try {
     res.send(await studentService.login(studentDto));
+  } catch (err) {
+    res.status(500);
+    res.json({ error: err || "Unkwnokwn Error"});
+  }
+});
+
+/**
+ * Reset password of a student
+ * @route POST /api/student/resetPassword
+ * @group Students - Operations about students
+ * @param {string} student.body.required - student to be loged as
+ * @returns {boolean} 200 
+ * @returns {Error}  default - Unexpected error
+ */
+ router.post('/resetPassword', [authJwt.verifyToken], async function (req, res) {
+  /*test {
+    "actualPassword": "password",
+    "newPassword": "password"
+  }*/
+  const payload = req.body;
+  const student = res.locals.student;
+
+  try {
+    res.send(await studentService.resetPassword(student, payload));
   } catch (err) {
     res.status(500);
     res.json({ error: err || "Unkwnokwn Error"});

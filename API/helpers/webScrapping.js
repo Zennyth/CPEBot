@@ -3,6 +3,7 @@ const gradeService = require('../services/gradeService');
 const rankService = require('../services/rankService');
 const moduleService = require('../services/moduleService');
 const semesterService = require('../services/semesterService');
+const sectorService = require('../services/sectorService');
 
 const { sequelize } = require('../db');
 const { QueryTypes } = require('sequelize');
@@ -10,6 +11,8 @@ const { QueryTypes } = require('sequelize');
 const SemesterMapper = require('../mappers/semesterMapper');
 
 const aes = require('../helpers/aes');
+
+const { send_notification_channel, send_notification_users } = require("../bot/bot");
 
 
 /* Temporary variables => db, .env */
@@ -260,15 +263,26 @@ module.exports =  {
     },
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
+        const channelsWithNewGrades = [];
         //console.log("WebScrapping / checkNewGradesByPromotionAndSector : (promotions and sectors)", combinations);
         for(const combination of combinations) {
             const students = await studentService.getAllByPromotionAndSector(combination.idsector, combination.yearpromotion);
+            const studentLength = students.length;
+            const studentsWithNewGrades = [];
             if(students.length > 0) {
-
-                if(!(await checkNewGrades(students.shift()))) return;
-
-                for(const student of students) {
-                    await checkNewGrades(student);
+                const firstCheck = students.shift();
+                if((await checkNewGrades(firstCheck))) {
+                    //console.log("WS / ", firstCheck);
+                    studentsWithNewGrades.push(firstCheck);
+                    for(const student of students) {
+                        if(await checkNewGrades(student)) studentsWithNewGrades.push(student);
+                    }
+                    /* Set Notifications ON (Test purpose Off)
+                    if(studentsWithNewGrades.length > studentLength * .5) {
+                        send_notification_channel(`${combination.lblsector.toLowerCase()}-${firstCheck.yearpromotion.split('-')[0]}`);
+                    } else {
+                        send_notification_users(studentsWithNewGrades);
+                    }*/
                 }
             }
         }
@@ -283,7 +297,7 @@ module.exports =  {
             current_user = user; // In case the user has changed his crendentials
         }
     
-        console.log(current_user);
+        //console.log(current_user);
     
         await browser.url(loginUrl); 
     

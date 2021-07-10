@@ -1,4 +1,3 @@
-var aes256 = require('aes256');
 const crypto = require('crypto');
 
 const { aesToken } = require('../config');

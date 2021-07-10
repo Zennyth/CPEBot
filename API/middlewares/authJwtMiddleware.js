@@ -14,7 +14,7 @@ const verifyToken = async (req, res, next) => {
     }
     if(token && token != "") {
         studentService.getByToken(token).then(student => {
-            console.log("Middleware : ", student);
+            //console.log("Middleware : ", student);
             if(student !== null) {
                 res.locals.student = student;
                 next();

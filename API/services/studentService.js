@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const { userInfo } = require('os');
 const sectorService = require("./sectorService");
 
+const { compare, hash } = require("../helpers/hash")
 const { create_channel } = require("../bot/bot");
 
 module.exports = {
@@ -82,16 +83,16 @@ module.exports = {
         };
     },
     login: async (studentDto) => {
-        console.log('Service / UserDto = ', studentDto);
+        //console.log('Service / UserDto = ', studentDto);
 
         const student = await module.exports.getByMail(studentDto.mail);
-        console.log(studentDto);
         if(student === null) {
             throw "Wrong combination.";
         }
-        if(studentDto.password == aes.decrypt(student.passwordstudent)) {
+
+        const result = compare(aes.decrypt(student.passwordstudent), studentDto.password);
+        if(result) {
             student.tokenlogstudent = crypto.randomBytes(20).toString('hex');
-            console.log(student);
             await student.save();
             return {
                 successfull: true,
@@ -99,6 +100,22 @@ module.exports = {
             };
         } else {
             throw "Wrong combination.";
+        }
+    },
+    resetPassword: async (student, payload) => {
+        if(payload.newPassword && payload.actualPassword ) {
+            const result = compare(aes.decrypt(student.passwordstudent), payload.actualPassword);
+            if(result) {
+                student.passwordstudent = aes.encrypt(payload.newPassword);
+                await student.save();
+                return {
+                    successfull: true
+                };
+            } else {
+                throw "Your actual password isn't what you sent";
+            }
+        } else {
+            throw "You need both actual and new passwords";
         }
     }
 }

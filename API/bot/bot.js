@@ -169,5 +169,25 @@ module.exports = {
                 {type: 'role', id: everyoneRole.id, deny: [Discord.Permissions.FLAGS.VIEW_CHANNEL]},
             ]);
         }
-    }
+    },
+    send_notification_users: async (students) => {
+        try {
+            for(const student of students) {
+                const user = await client.users.fetch(student.pseudostudent, false);
+                if(user) user.send(`@${user.username}, a new grade has arrived !`);
+            }
+            return true;
+        } catch (error) {
+            return false;
+        }
+    },
+    send_notification_channel: async (channelName) => {
+        try {
+            const channel = client.channels.cache.find(ch => ch.name === channelName.toLowerCase());
+            channel.send(`@here, a new grade has arrived !`);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    },
 }

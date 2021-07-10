@@ -2,11 +2,14 @@ import axios from "@/helpers/axios.helper";
 
 import store from '@/store';
 
+import bcrypt from 'bcryptjs';
+
 export default {
     login: async (email, password) => {
+        const salt = bcrypt.genSaltSync(10);
         const response = await axios.post('/student/login', {
             mail: email,
-            password: password
+            password: bcrypt.hashSync(password, salt)
         });
         if(response && response.data.successfull) {
             axios.defaults.headers['x-access-token'] = response.data.token;
@@ -21,6 +24,21 @@ export default {
                 store.dispatch('login', response.data.token);
                 return true;
             } else return false;   
+        } catch (error) {
+            return {
+                error: error,
+            }
+        }
+    },
+    resetPassword: async (form) => {
+        try {
+            const salt = bcrypt.genSaltSync(10);
+            const payload = {
+                newPassword: form.newPassword,
+                actualPassword: bcrypt.hashSync(form.actualPassword, salt)
+            }
+            const response = await axios.post('/student/resetPassword', payload);
+            return response && response.data; 
         } catch (error) {
             return {
                 error: error,

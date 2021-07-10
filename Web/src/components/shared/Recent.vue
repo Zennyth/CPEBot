@@ -21,7 +21,7 @@ export default {
   },
   async mounted() {
       this.notes = await gradeService.getRecent(this.nbGrades);
-      console.log(this.notes)
+      //console.log(this.notes)
   }
 }
 </script>

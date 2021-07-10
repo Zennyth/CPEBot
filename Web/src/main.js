@@ -16,7 +16,7 @@ Vue.use(VueI18n);
 const trad = require("@/i18n/translations.json");
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: navigator.language, // set locale
+  locale: 'fr',//navigator.language || 'fr', // set locale
   messages: trad, // set locale messages
 })
 

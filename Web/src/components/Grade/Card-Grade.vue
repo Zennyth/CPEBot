@@ -49,7 +49,7 @@ export default {
       return this.grade.mark >= 10;
     },
     formatWithLocalLanguage() {
-      console.log(navigator)
+      //console.log(navigator)
       return helper.formatWithLanguage(this.grade.timestamp,this.$i18n.locale)
     }
   }
