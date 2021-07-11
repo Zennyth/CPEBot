@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <b-col>
+    <b-col class="center">
         <section>
             <h1>{{$t('register.register')}}</h1>
             <Card variant="glass">

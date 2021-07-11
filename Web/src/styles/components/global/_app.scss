@@ -7,7 +7,20 @@
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 60px );
     -webkit-backdrop-filter: blur( 4px );
-    overflow: scroll;
+    overflow: auto;
+
+    > main {
+        overflow: overlay;
+    }
+
+    @media (min-width: $md) {
+        > main {
+            height: calc(100vh - 6em);
+            top: 6em;
+            position: relative;
+            width: 100vw;
+        }
+    }
 }
 
 

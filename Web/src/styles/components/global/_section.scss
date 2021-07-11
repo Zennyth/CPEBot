@@ -1,13 +1,17 @@
 section {
     margin: $spacer 0;
     width: 100%;
-    max-width: 45%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 45%;
+    justify-content: center;
 
+    &.w-100 {
+        max-width: 100%;
+    }
 
-    @include media-breakpoint-down(sm) { 
+    @include media-breakpoint-down(md) { 
         max-width: 100%;
     }
 }

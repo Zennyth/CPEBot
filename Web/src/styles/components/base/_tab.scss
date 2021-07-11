@@ -1,13 +1,15 @@
 .nav-tabs {
     border: none;
     justify-content: flex-end;
+
     .nav-item {
+
         .active {
             background: transparent;
             border-top-left-radius: 0px;
             border-top-right-radius: 0px;
             border: none;
-            border-bottom: solid 1px $primary;
+            border-bottom: solid 1px $primary !important;
             color: $primary !important;
         }
 
@@ -16,3 +18,12 @@
         }
     }
 } 
+
+.nav-link {
+    &:hover, &:focus {
+        border: none !important;
+        border-color: transparent !important;
+    }
+    border: none !important;
+    border-color: transparent !important;
+}

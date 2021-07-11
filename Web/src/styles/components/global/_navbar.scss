@@ -18,11 +18,18 @@
     top: calc(100vh - 6em);
     transition: all 1s ease;
 
+    @media (min-width: $md) { 
+        top: 0;
+        position: fixed;
+        border-radius: 0;
+    }
+
     .navbar-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-decoration: none;
+        cursor: pointer;
 
         > span {
             font-size: .8em;
@@ -32,6 +39,14 @@
         > svg {
             color: $text-secondary;
             font-size: 1.5em;
+        }
+
+        @media (min-width: $md) { 
+            flex-direction: row;
+            > span {
+                margin-left: 1em;
+                font-size: 1em;
+            }
         }
     }
 

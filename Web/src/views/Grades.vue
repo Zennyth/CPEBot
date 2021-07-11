@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <b-col>
-      <section>
+      <section class="w-100">>
         <h1>{{$t('grades.grades')}}</h1>
         <b-tabs content-class="mt-3 w-100" style="width: 100%;">
           <b-tab :title="$t('grades.allGrades')" active>

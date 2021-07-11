@@ -151,7 +151,7 @@ client.on('ready', async () => {
     console.log(`DISCORD / Logged in as ${client.user.tag}!`);
 });
 
-client.login(discord.token);
+//client.login(discord.token);
 
 module.exports = {
     create_channel: async function(channelName) {

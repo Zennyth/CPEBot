@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <b-col>
+    <b-col class="center">
       <h1>{{$t('settings.settings')}}</h1>
       <section>
         <Card variant="glass">

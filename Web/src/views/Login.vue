@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <b-col>
+    <b-col class="center">
         <section>
             <h1>{{$t('login.login')}}</h1>
             <Card variant="glass">
@@ -94,16 +94,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.login {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-}
 .absolute {
-    position: absolute;
-    bottom: 1em;
-    text-align: center;
-    width: 100%;
-    color: #878484;
+  position: absolute;
+  bottom: 1em;
+  text-align: center;
+  width: 100%;
+  color: #878484;
 }
 </style>

@@ -56,11 +56,15 @@ new Vue({
     connect() {
       console.log('socket connected')
     },
-    resLogin(isConnected) {
-      console.log("isConnected : ", isConnected);
-      if(!isConnected) {
-        //this.$store.dispatch('logout');
+    isTokenValid(boolean) {
+      console.log("is the token valid : ", boolean);
+      if(!boolean) {
+        this.$store.dispatch('logout');
       }
+    },
+    updateClient({ newGrades, grades }) {
+      this.$store.commit("setNewGrades", newGrades);
+      this.$store.dispatch("saveGrades", grades);
     }
   },
   methods: {

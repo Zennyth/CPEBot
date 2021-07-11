@@ -1,4 +1,5 @@
 const studentService = require('../services/studentService');
+const gradeService = require("../services/gradeService");
 
 var io = null;
 
@@ -7,7 +8,6 @@ module.exports = {
         io = require('socket.io')(server);
 
         // Socket
-
         io.on('connection', (socket) => { 
             console.log(socket.id + " is connected !");
         
@@ -18,14 +18,15 @@ module.exports = {
                 if(res) {
                     studentService.setSocket(student, socket.id);
                 }
-                io.to(socket.id).emit("resLogin", res);
+                io.to(socket.id).emit("isTokenValid", res);
             });
         });
     },
-    updateClient: (student) => {
+    updateClient: async (student) => {
         if(io && student.socketstudent) {
             io.to(student.socketstudent).emit("updateClient", {
                 newGrades: true,
+                grades: await gradeService.getAllGradesByModulesSemestersForUser(student.idstudent)
             });
         }
     }

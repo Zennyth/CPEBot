@@ -1,11 +1,36 @@
-.home > .col {
+.home, .login > .col {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 
+    &.center {
+        justify-content: center;
+    }
+
+    @include media-breakpoint-up(md) { 
+        margin-top: 2em;
+    }
+
     @include media-breakpoint-down(sm) { 
         flex-direction: column;
         align-items: center;
+    }
+}
+
+.login {
+    height: 100vh;
+    top: 0;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > .col {
+        @include media-breakpoint-up(md) { 
+            margin-top: 0 !important;
+        }
     }
 }
