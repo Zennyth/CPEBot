@@ -77,6 +77,7 @@ export default {
     login: async function() {
       try {
         await userService.login(this.form.mail, this.form.password);
+        this.$root.login();
         this.$router.push({name: "Grades"});
       } catch (err) {
         this.$notify({

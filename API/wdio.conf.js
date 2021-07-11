@@ -1,3 +1,3 @@
 exports.config = {
-    waitforTimeout: 1000,
+    waitforTimeout: 5000,
 }

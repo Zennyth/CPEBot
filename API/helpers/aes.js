@@ -27,7 +27,7 @@ module.exports = {
     },
     decrypt: (encryptedStr) => {
         // base64 decoding
-        var bData = new Buffer(encryptedStr, 'base64');
+        var bData = new Buffer.from(encryptedStr, 'base64');
 
         // convert data to buffers
         var salt = bData.slice(0, 64);

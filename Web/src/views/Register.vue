@@ -39,7 +39,7 @@
                         </b-form-group>
                       </validation-provider>
 
-                      <validation-provider :name="$t('register.pseudo')" :rules="{ required: true }" v-slot="validationContext">
+                      <validation-provider :name="$t('register.pseudo')" :rules="{ required: false }" v-slot="validationContext">
                         <b-form-group id="example-input-group-5" :label="$t('register.pseudo')" label-for="example-input-5">
                           <b-form-input
                             id="example-input-5"
@@ -159,6 +159,7 @@ export default {
           });
         }
       } else {
+        this.$root.login();
         this.$router.push({name: "Grades"});
       }
       return;

@@ -40,6 +40,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
+    socketstudent: {
+      type: DataTypes.STRING(20),
+      allowNull: true
+    },
     ispublic: {
       type: DataTypes.BOOLEAN,
       allowNull : false,

@@ -26,6 +26,9 @@ export default {
   name: 'App',
   components: {
     Header,
+  },
+  mounted() {
+    this.$root.login(); // Try to connect if you are already logged with the token
   }
 }
 </script>

@@ -17,7 +17,19 @@
       <span>{{$t('home.home')}}</span>
     </router-link>
     <router-link class="navbar-item" to="grades" :class="route == 'Grades' ? 'active' : ''">
-      <b-icon icon="check-square" aria-hidden="true"></b-icon>
+      <b-iconstack>
+        <b-icon
+          stacked
+          icon="check-square"
+        ></b-icon>
+        <b-icon
+          v-if="$store.getters.newGrades"
+          shift-v="8" shift-h="3"
+          icon="circle-fill"
+          variant="danger"
+          scale="0.5"
+        ></b-icon>
+      </b-iconstack>
       <span>{{$t('grades.grades')}}</span>
     </router-link>
   </b-navbar>

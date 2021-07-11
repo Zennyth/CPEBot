@@ -20,6 +20,18 @@ const i18n = new VueI18n({
   messages: trad, // set locale messages
 })
 
+// Socket Setup
+import io from 'socket.io-client'
+import VueSocketIo from 'vue-socket.io'
+Vue.use(new VueSocketIo({
+  debug: false,
+  connection: io(), //options object is Optional
+  vuex: {
+    store,
+    actionPrefix: "SOCKET_",
+    mutationPrefix: "SOCKET_"
+  }
+}));
 
 import Notifications from 'vue-notification'
 import velocity      from 'velocity-animate'
@@ -40,6 +52,22 @@ Vue.component("ValidationProvider", ValidationProvider);
 
 Vue.config.productionTip = false
 new Vue({
+  sockets: {
+    connect() {
+      console.log('socket connected')
+    },
+    resLogin(isConnected) {
+      console.log("isConnected : ", isConnected);
+      if(!isConnected) {
+        //this.$store.dispatch('logout');
+      }
+    }
+  },
+  methods: {
+    login: function() {
+      this.$socket.emit("login", store.getters.token);
+    }
+  },
   router,
   store,
   i18n,

@@ -3,8 +3,8 @@ const app = express();
 const { port } = require('./config');
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
 const { sequelize, init } = require('./db');
+const socket = require("./helpers/socket");
 
 // Cors
 const corsOptions = {
@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const server = require('http').createServer(app);
+socket.initSocket(server);
 
 // Use Swagger !
 
@@ -72,7 +74,7 @@ const gradeController = require('./routers/gradeController');
 app.use('/api/grade', gradeController);
 
 // Launch API
-app.listen(port, async () => {
+server.listen(port, async () => {
   console.log(`App / Example app listening at http://localhost:${port}`);
 
   // is DB working ?
@@ -86,21 +88,24 @@ app.listen(port, async () => {
 });
 
 
+// Web Scrapping running in background
 
 const { initWebScrapping, checkNewGradesByPromotionAndSector } = require('./helpers/webScrapping');
+const { delay } = require("./helpers/utils");
 
 const backgroundTask = async () => {
   console.log("Background task launched :");
+  await delay(10000);
 
   try {
     await checkNewGradesByPromotionAndSector();
   } catch (error) {
     console.log("Background Task / Error : ", error);
   }
-  //await backgroundTask();
+  await backgroundTask();
 };
 
-
+/*
 initWebScrapping().then(() => {
   backgroundTask();
-});
+});*/

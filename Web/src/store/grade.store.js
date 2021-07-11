@@ -1,10 +1,14 @@
 export default {
     state: () => ({ 
         grades: [],
+        newGrades: true
     }),
     mutations: { 
         modifyGrades(state, newGrades) {
             state.grades = newGrades || [];
+        },
+        setNewGrades(state, newGrades) {
+          state.newGrades = newGrades;
         }
     },
     actions: { 
@@ -37,6 +41,9 @@ export default {
         },
         grades: state => {
             return state.grades;
+        },
+        newGrades: state => {
+          return state.newGrades;
         }
     }
 };

@@ -124,5 +124,14 @@ module.exports = {
         } else {
             throw "You need both actual and new passwords";
         }
+    },
+    setSocket: async(student, idSocket) => {
+        try {
+            student.socketstudent = idSocket;
+            await student.save();
+            return true;
+        } catch {
+            return false;
+        }
     }
 }

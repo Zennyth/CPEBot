@@ -2,13 +2,13 @@
   <div class="home">
     <b-col>
       <section>
-        <h1>Grades</h1>
+        <h1>{{$t('grades.grades')}}</h1>
         <b-tabs content-class="mt-3 w-100" style="width: 100%;">
-          <b-tab title="All" active>
+          <b-tab :title="$t('grades.allGrades')" active>
             <Tree :array="nestedSemesters"/>
           </b-tab>
           <b-tab title="Recent">
-             <Recent :nbGrades="5" />
+            <Recent :nbGrades="5" />
           </b-tab>
         </b-tabs>
       </section>
@@ -39,6 +39,8 @@ export default {
     } else {
       this.nestedSemesters = await gradeService.getAll();
     }
+
+    this.$store.commit("setNewGrades", false);
     console.log(this.nestedSemesters)
   }
 }

@@ -6,7 +6,7 @@
         "register": {
             "mail": "Mail",
             "password": "Password",
-            "pseudo": "Pseudo",
+            "pseudo": "Discord Id",
             "promotion": "Promotion",
             "sector": "Sector",
             "register": "Register",
@@ -23,6 +23,7 @@
         },
         "grades":{
             "grades": "Grades",
+            "allGrades": "All",
             "recent": "Your mark was updated at "
         },
         "settings": {
@@ -41,7 +42,7 @@
         "register": {
             "mail": "Adresse mail",
             "password": "Mot de passe",
-            "pseudo": "Pseudo",
+            "pseudo": "Id Discord",
             "promotion": "Promotion",
             "sector": "Filière",
             "register": "Créer un compte",
@@ -58,6 +59,7 @@
         },
         "grades":{
             "grades": "Notes",
+            "allGrades": "Toutes",
             "recent": "Votre note a été soumis le "
         },
         "settings": {

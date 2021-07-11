@@ -5,6 +5,8 @@ const moduleService = require('../services/moduleService');
 const semesterService = require('../services/semesterService');
 const sectorService = require('../services/sectorService');
 
+const socket = require("../helpers/socket");
+
 const { sequelize } = require('../db');
 const { QueryTypes } = require('sequelize');
 
@@ -274,8 +276,12 @@ module.exports =  {
                 if((await checkNewGrades(firstCheck))) {
                     //console.log("WS / ", firstCheck);
                     studentsWithNewGrades.push(firstCheck);
+                    socket.updateClient(firstCheck);
                     for(const student of students) {
-                        if(await checkNewGrades(student)) studentsWithNewGrades.push(student);
+                        if(await checkNewGrades(student)) {
+                            studentsWithNewGrades.push(student);
+                            socket.updateClient(student);
+                        }
                     }
                     /* Set Notifications ON (Test purpose Off)
                     if(studentsWithNewGrades.length > studentLength * .5) {
