@@ -1,19 +1,23 @@
 export default {
     state: () => ({ 
         grades: [],
-        newGrades: true
+        newGrades: [],
+        newGradesIcon: true
     }),
     mutations: { 
-        modifyGrades(state, newGrades) {
-            state.grades = newGrades || [];
+        modifyGrades(state, grades) {
+            state.grades = grades || [];
         },
-        setNewGrades(state, newGrades) {
-          state.newGrades = newGrades;
+        modifyNewGrades(state, grades) {
+          state.newGrades = grades || [];
+        },
+        setNewGradesIcon(state, newGradesIcon) {
+          state.newGradesIcon = newGradesIcon;
         }
     },
     actions: { 
         saveGrades(context, newGrades) {
-            newGrades.forEach(semester => {
+          newGrades.forEach(semester => {
                 semester.modules.forEach(module => {
                   const subjects = [];
                   module.notes.forEach(note => {
@@ -33,17 +37,23 @@ export default {
                 });
             });
             context.commit('modifyGrades', newGrades);
+        },
+        saveNewGrades(context, newGrades) {
+          context.commit('modifyNewGrades', newGrades);
         }
     },
     getters: {
         hasGrades: state => {
-            return Array.isArray(state.grades) && state.grades.length > 0;
+          return Array.isArray(state.grades) && state.grades.length > 0;
         },
         grades: state => {
-            return state.grades;
+          return state.grades;
         },
         newGrades: state => {
           return state.newGrades;
+        },
+        newGradesIcon: state => {
+          return state.newGradesIcon;
         }
     }
 };

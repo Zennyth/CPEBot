@@ -266,15 +266,17 @@ module.exports =  {
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
         const channelsWithNewGrades = [];
-        //console.log("WebScrapping / checkNewGradesByPromotionAndSector : (promotions and sectors)", combinations);
+        // console.log("WebScrapping / checkNewGradesByPromotionAndSector : (promotions and sectors)", combinations);
         for(const combination of combinations) {
             const students = await studentService.getAllByPromotionAndSector(combination.idsector, combination.yearpromotion);
             const studentLength = students.length;
             const studentsWithNewGrades = [];
             if(students.length > 0) {
+                // console.log("WS Check Combination / ", combination);
                 const firstCheck = students.shift();
+                // console.log("WS Check / ", firstCheck);
                 if((await checkNewGrades(firstCheck))) {
-                    //console.log("WS / ", firstCheck);
+                    // console.log("WS Check / ", firstCheck);
                     studentsWithNewGrades.push(firstCheck);
                     await socket.updateClient(firstCheck);
                     for(const student of students) {

@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../config");
 const { models } = require("../db");
 
-const studentService = require('../Services/studentService');
+const studentService = require("../services/studentService.js");
 
 const verifyToken = async (req, res, next) => {
     let token = req.headers["x-access-token"];

@@ -37,7 +37,7 @@ module.exports = {
                 idstudent: id 
             },
             order:[['updatedAt','DESC']],
-            limit: nbGrade
+            limit: parseInt(nbGrade)
         });
         return grades.map(grade => GradeMapper.toDto(grade));
     },

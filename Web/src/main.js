@@ -62,9 +62,11 @@ new Vue({
         this.$store.dispatch('logout');
       }
     },
-    updateClient({ newGrades, grades }) {
-      this.$store.commit("setNewGrades", newGrades);
+    updateClient({ newGradesIcon, grades, newGrades }) {
+      //console.log("Update : ", { newGradesIcon, grades, newGrades })
+      this.$store.commit("setNewGradesIcon", newGradesIcon);
       this.$store.dispatch("saveGrades", grades);
+      this.$store.dispatch("saveNewGrades", newGrades);
     }
   },
   methods: {

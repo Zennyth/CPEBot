@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'rank',
-    schema: 'public',
+
     timestamps: false,
     indexes: [
       {

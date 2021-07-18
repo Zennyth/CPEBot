@@ -2,22 +2,29 @@ const { Sequelize } = require('sequelize');
 const { db } = require('./config');
 const aes = require('./helpers/aes');
 
-const sequelize = new Sequelize('CPEAPI', db.username, db.password, {
+console.log(db)
+
+const sequelize = new Sequelize("cpeapi", db.username, db.password, {
     host: db.uri,
-    dialect: 'postgres',
+    dialect: 'mysql',
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    },
     logging: false
 });
-
 var initModels = require("./models/init-models");
 
 var models = initModels(sequelize);
 
-const syncModels = async () => {
+const syncModels = async () => {/*
     await models.module.sync({ force: true });
     await models.promotion.sync({ force: true });
     await models.semester.sync({ force: true });
     await models.sector.sync({ force: true });
-    await models.student.sync({ force: true });
+    await models.student.sync({ force: true });*/
     await models.grade.sync({ force: true });
     await models.rank.sync({ force: true });
 }
@@ -66,8 +73,10 @@ module.exports = {
     sequelize: sequelize,
     models: models,
     init: async () => {
-        await syncModels();
-        await initial();
-        // sequelize.options.logging = true;
+        
+        await syncModels();/*
+        
+        await initial();*/
+        //sequelize.options.logging = true;
     }
 };

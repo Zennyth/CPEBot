@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'semester',
-    schema: 'public',
+
     timestamps: false,
     indexes: [
       {

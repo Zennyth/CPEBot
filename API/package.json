@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon server.js",
-    "bot": "nodemon ./bot/bot.js"
+    "bot": "nodemon ./bot/bot.js",
+    "sequelize": "sequelize-auto -o './models' -d cpeapi -h /cloudsql/cpenotes:europe-west1:cpenotes -u admin -p 3306 -x pHMj4xrtmDAMjD19 -e mysql"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "express": "^4.17.1",
     "express-swagger-generator": "^1.1.17",
     "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.9",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",

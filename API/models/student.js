@@ -52,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'student',
-    schema: 'public',
+
     timestamps: false,
     indexes: [
       {

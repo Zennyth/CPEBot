@@ -23,7 +23,7 @@
           icon="check-square"
         ></b-icon>
         <b-icon
-          v-if="$store.getters.newGrades"
+          v-if="$store.getters.newGradesIcon"
           shift-v="8" shift-h="3"
           icon="circle-fill"
           variant="danger"

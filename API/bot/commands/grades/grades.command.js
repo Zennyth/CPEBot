@@ -1,5 +1,5 @@
 const gradeService = require("../../../services/gradeService");
-const studentService = require("../../../Services/studentService");
+const studentService = require("../../../services/studentService");
 
 function formatColor(message, bool){
 	var value = undefined;

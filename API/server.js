@@ -54,10 +54,10 @@ let options = {
 };
 expressSwagger(options);
 
-// Don't remove !!!
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(express.static(__dirname + '/dist'));
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+})
 
 // Import routers
 const studentController = require('./routers/studentController');
@@ -79,8 +79,8 @@ server.listen(port, async () => {
 
   // is DB working ?
   try {
-    await init();
     await sequelize.authenticate();
+    await init();
     console.log('DB / Connection has been established successfully.');
   } catch (error) {
     console.error('DB / Unable to connect to the database:', error);
@@ -95,17 +95,17 @@ const { delay } = require("./helpers/utils");
 
 const backgroundTask = async () => {
   console.log("Background task launched :");
-  await delay(10000);
-
   try {
     await checkNewGradesByPromotionAndSector();
   } catch (error) {
     console.log("Background Task / Error : ", error);
   }
-  await backgroundTask();
+
+  await delay(10000);
+  //await backgroundTask();
 };
 
-/*
+
 initWebScrapping().then(() => {
   backgroundTask();
-});*/
+});
