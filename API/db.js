@@ -4,7 +4,7 @@ const aes = require('./helpers/aes');
 
 console.log(db)
 
-const sequelize = new Sequelize("cpeapi", db.username, db.password, {
+const sequelize = new Sequelize(db.name, db.username, db.password, {
     host: db.uri,
     dialect: 'mysql',
     pool: {
@@ -19,14 +19,14 @@ var initModels = require("./models/init-models");
 
 var models = initModels(sequelize);
 
-const syncModels = async () => {/*
-    await models.module.sync({ force: true });
-    await models.promotion.sync({ force: true });
-    await models.semester.sync({ force: true });
-    await models.sector.sync({ force: true });
-    await models.student.sync({ force: true });*/
-    await models.grade.sync({ force: true });
-    await models.rank.sync({ force: true });
+const syncModels = async () => {
+    await models.module.sync({ alter: true });
+    await models.promotion.sync({ alter: true });
+    await models.semester.sync({ alter: true });
+    await models.sector.sync({ alter: true });
+    await models.student.sync({ alter: true });
+    await models.grade.sync({ alter: true });
+    await models.rank.sync({ alter: true });
 }
 
 const initial = async () => {
@@ -74,9 +74,8 @@ module.exports = {
     models: models,
     init: async () => {
         
-        await syncModels();/*
-        
-        await initial();*/
+        await syncModels();
+        // await initial();
         //sequelize.options.logging = true;
     }
 };

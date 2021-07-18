@@ -256,12 +256,17 @@ module.exports =  {
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("florent.monnet@cpe.fr");
         current_user = current_user.dataValues;
-        browser = await remote({
-            capabilities: {
-                browserName: 'chrome'
-            },
-            logLevel: "error",
-        });
+
+        try {
+            browser = await remote({
+                capabilities: {
+                    browserName: 'chrome'
+                },
+                logLevel: "error",
+            });
+        } catch (err) {
+            console.log("WS Browser / ", err);
+        }
     },
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
