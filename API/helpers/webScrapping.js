@@ -73,26 +73,26 @@ const getGradesFromModules = async (semesters) => {
         for(const [indexModule, module] of semester.modules.entries()) {
             module.grades = [];
             for(const elem of module.childElements) {
-                var doms = await elem.$$('.gris');
-                if(doms.length == 0) doms = await elem.$$('.blanc');
+                var doms = $(elem).find('.gris');
+                if(doms.length == 0) doms = $(elem).find('.blanc');
                 if(doms.length > 0) {
                     module.grades.push({
-                        label: await doms[0].getText(),
-                        type: await doms[1].getText(),
-                        coeff: parseFloat((await doms[2].getText()).replace(' %', '')),
-                        mark: await doms[3].getText()
+                        label: doms[0].children[0].data,
+                        type: doms[1].children[0].data,
+                        coeff: parseFloat((doms[2].children[0].data).replace(' %', '')),
+                        mark:  doms[3].children[0].data
                     });
-                }
+                }                
             }
         }
         var i = 0;
-        for(const [index, elem] of semester.childElements.entries()) {
-            const rankElem = await elem.$$('.average');
+        semester.childElements.each(function(index, elem) {
+            const rankElem = $(elem).find('.average');
             if(rankElem.length > 0) {
-                semester.modules[i].rank = (await rankElem[0].getText()).slice(-1);;
+                semester.modules[i].rank = rankElem[0].children[0].data.slice(-1);;
                 i++;
             }
-        }
+        });
     }
 }
 
@@ -101,15 +101,15 @@ const getModulesFromSemesters = async (semesters) => {
     for(var [index, semester] of semesters.entries()) {
         semester.modules = [];
 
-        for(const [indexChild, child] of semester.childElements.entries()) {
-            const elem = await child.$('<th>');
-            if(!elem.error) {  
+        semester.childElements.each(function(indexChild, child) {
+            const elem = $(child).find('th');
+            if(elem.length > 0) {
                 semester.modules.push({
                     index: indexChild,
-                    label: await elem.getText()
+                    label: elem[0].children[0].data
                 });
             }
-        }
+        })
 
         if(semester.modules.length == 0) {
             semester.modules.push({
@@ -126,20 +126,18 @@ const getSemesters = async (trs, semesters) => {
     var parser = [];
     
     for(let semester of semesters) {
-        const trParent = await semester.parentElement();
-        const parentHtml = await trParent.getHTML();
+        const trParent = semester.parent;
+        const htmlParent = $.html(trParent);
         
-        for(const [index, tr] of trs.entries()) {
-            const trHmtl = await tr.getHTML();
-            if(trHmtl == parentHtml) {
-                const label = await tr.$('.semestre');
+        trs.each(async function(index, tr) {
+            const html = $.html(tr);
+            if(html == htmlParent) {
                 parser.push({
-                    id : await label.getText(),
-                    index: index
+                    id : tr.children[0].children[0].data,
+                    index
                 });
-                // test with break
             }
-        }
+        });
     }
 
     if(parser[0].index > 0) parser.unshift({
@@ -153,10 +151,11 @@ const getSemesters = async (trs, semesters) => {
 }
 
 const getGrades = async () => {
-    await browser.url(gradesUrl);
+    const loginService = await instance.get("https://sso.cpe.fr/cas/login?service=https%3A%2F%2Foga.cpe.fr%2Fnotes.php");
+    $ = cheerio.load(loginService.data);
 
-    const semestersLabel = await browser.$$('.semestre');
-    const trs = await browser.$$('<tr>');
+    const semestersLabel = $('.semestre');
+    const trs = $('tr');
 
     const semesters = await getSemesters(trs, semestersLabel);
     await getModulesFromSemesters(semesters);
@@ -247,26 +246,15 @@ const checkNewGrades = async (student = null) => {
 
 /* Main */
 
-const { remote } = require('webdriverio');
-
-var browser = null;
+const { instance, resetCookies } = require('./axios.js');
+const cheerio = require('cheerio');
+var $ = null;
 
 module.exports =  {
     checkNewGradesByUser: checkNewGrades,
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("florent.monnet@cpe.fr");
         current_user = current_user.dataValues;
-
-        try {
-            browser = await remote({
-                capabilities: {
-                    browserName: 'chrome'
-                },
-                logLevel: "error",
-            });
-        } catch (err) {
-            console.log("WS Browser / ", err);
-        }
     },
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
@@ -302,29 +290,26 @@ module.exports =  {
     },
     login: async (user = null, dto = false) => {
         if(user != null) {
-            if(user.mailstudent != current_user.mailstudent) {
-                await browser.url(logoutUrl); // Logout before login in
-                await browser.deleteCookies();
-                await browser.reloadSession();
-            }
+            if(user.mailstudent != current_user.mailstudent) resetCookies();
             current_user = user; // In case the user has changed his crendentials
         }
     
         //console.log(current_user);
-    
-        await browser.url(loginUrl); 
-    
-        const username = await browser.$('[name="username"]');
-        await username.setValue(current_user.mailstudent);
-        const password = await browser.$('[name="password"]');
-        await password.setValue(!dto ? aes.decrypt(current_user.passwordstudent) : current_user.passwordstudent);
-        const submit = await browser.$('[name="submit"]');
-        await submit.click();
-        
-        const confirmation = await browser.$$('.success'); // Check if the crendetials were valid
-        if(confirmation.length > 0) console.log("Login successfull !");
+
+        resetCookies();
+        const response = await instance.get(loginUrl);
+
+        const $ = cheerio.load(response.data);
+        const lt = $('input[name=lt]')[0].attribs.value;
+        const execution = $('input[name=execution]')[0].attribs.value;
+
+        const login = await instance.post(loginUrl, `username=${current_user.mailstudent}&password=${!dto ? aes.decrypt(current_user.passwordstudent) : current_user.passwordstudent}&lt=${lt}&execution=${execution}&_eventId=submit&submit=LOGIN`);
+
+        const isLoggedIn = cheerio.load(login.data);
+
+        if(isLoggedIn('.success')[0]) console.log("Login successfull !");
         else {
-            await browser.url(logoutUrl);
+            resetCookies();
             throw "Invalid Credentials"; 
         }
     },

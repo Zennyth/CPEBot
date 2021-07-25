@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const auth = require("../config");
 const { models } = require("../db");
 
