@@ -96,7 +96,7 @@ export default {
 <style scoped lang="scss">
 .absolute {
   position: absolute;
-  bottom: 1em;
+  bottom: 2em;
   text-align: center;
   width: 100%;
   color: #878484;

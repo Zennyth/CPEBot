@@ -8,6 +8,9 @@
     backdrop-filter: blur( 60px );
     -webkit-backdrop-filter: blur( 4px );
     overflow: auto;
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
 
     > main {
         overflow: overlay;

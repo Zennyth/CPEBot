@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <b-col class="center">
-      <h1>{{$t('settings.settings')}}</h1>
-      <section>
+      <section class="w-100">
+        <h1>{{$t('settings.settings')}}</h1>
         <Card variant="glass">
           <template v-slot:header>
             <h3>{{$t('settings.resetPassword')}}</h3>
