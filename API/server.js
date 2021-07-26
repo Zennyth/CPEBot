@@ -54,11 +54,6 @@ let options = {
 };
 expressSwagger(options);
 
-app.use(express.static(__dirname + '/dist'));
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-})
-
 // Import routers
 const studentController = require('./routers/studentController');
 app.use('/api/student', studentController);
@@ -72,6 +67,11 @@ const semesterController = require('./routers/semesterController');
 app.use('/api/semester', semesterController);
 const gradeController = require('./routers/gradeController');
 app.use('/api/grade', gradeController);
+
+app.use(express.static(__dirname + '/dist'));
+app.get('*', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+})
 
 // Launch API
 server.listen(port, async () => {
