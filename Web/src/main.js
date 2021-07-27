@@ -67,7 +67,7 @@ new Vue({
       this.$store.commit("setNewGradesIcon", newGradesIcon);
       this.$store.dispatch("saveGrades", grades);
       this.$store.dispatch("saveNewGrades", newGrades);
-    }
+    },
   },
   methods: {
     login: function() {
