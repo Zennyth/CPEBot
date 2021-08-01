@@ -4,11 +4,11 @@
       <section class="w-100">
         <h1>{{$t('grades.grades')}}</h1>
         <b-tabs content-class="mt-3 w-100" style="width: 100%;">
-          <b-tab :title="$t('grades.allGrades')" active>
+          <b-tab :title="$t('grades.allGrades')">
             <Tree :array="$store.getters.grades"/>
           </b-tab>
-          <b-tab title="Recent">
-            <Recent :array="$store.getters.newGrades" />
+          <b-tab :title="$t('grades.recent')" active>
+            <Recent :array="$store.getters.newGrades"/>
           </b-tab>
         </b-tabs>
       </section>

@@ -1,15 +1,15 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="info" fixed="bottom" :sticky="true" :class="headerLessPages.includes(route) ? 'nav-hide' : ''">
-    <router-link class="navbar-item" :class="route == 'Settings' ? 'active' : ''" to="settings">
-      <b-icon icon="gear" aria-hidden="true"></b-icon>
-      <span>{{$t('settings.settings')}}</span>
-    </router-link>
     <a class="navbar-item router-link-exact-active router-link-active" v-if="$store.getters.isLoggedIn" @click="$store.dispatch('logout')">
-      <b-icon icon="x" aria-hidden="true"></b-icon>
+      <b-icon icon="box-arrow-in-left" aria-hidden="true"></b-icon>
       <span>{{$t('login.logout')}}</span>
     </a>
     <router-link class="navbar-item" to="account" :class="route == 'Account' ? 'active' : ''" v-else>
       <b-icon icon="person" aria-hidden="true"></b-icon>
+      <span>{{$t('settings.settings')}}</span>
+    </router-link>
+    <router-link class="navbar-item" :class="route == 'Settings' ? 'active' : ''" to="settings">
+      <b-icon icon="gear" aria-hidden="true"></b-icon>
       <span>{{$t('settings.settings')}}</span>
     </router-link>
     <router-link class="navbar-item" to="/" :class="route == 'Home' ? 'active' : ''">

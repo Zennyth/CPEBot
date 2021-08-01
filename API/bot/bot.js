@@ -93,7 +93,7 @@ module.exports = {
     send_notification_users: async (students) => {
         try {
             for(const student of students) {
-                const user = await client.users.fetch(student.pseudostudent, false);
+                const user = await client.users.fetch(student.discordtoken, false);
                 if(user) user.send(`@${user.username}, a new grade has arrived !`);
             }
             return true;

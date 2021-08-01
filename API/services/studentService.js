@@ -86,11 +86,13 @@ module.exports = {
 
         return {
             successfull: true,
-            token: studentModel.tokenlogstudent
+            token: studentModel.tokenlogstudent,
+            discord: student.discordtoken,
+            notification: student.notificationtoken
         };
     },
     login: async (studentDto) => {
-        //console.log('Service / UserDto = ', studentDto);
+        console.log('Service / UserDto = ', studentDto);
 
         const student = await module.exports.getByMail(studentDto.mail);
         if(student === null) {
@@ -103,7 +105,9 @@ module.exports = {
             await student.save();
             return {
                 successfull: true,
-                token: student.tokenlogstudent
+                token: student.tokenlogstudent,
+                discord: student.discordtoken,
+                notification: student.notificationtoken
             };
         } else {
             throw "Wrong combination.";
@@ -124,6 +128,25 @@ module.exports = {
         } else {
             throw "You need both actual and new passwords";
         }
+    },
+    changeNotifications: async (student, payload) => {
+        if(payload.discord) {
+            student.discordtoken = payload.discord;
+            await student.save();
+            return {
+                successfull: true
+            };
+        }
+
+        if(payload.notification) {
+            student.notificationtoken = payload.notification;
+            await student.save();
+            return {
+                successfull: true
+            };
+        }
+
+        return false;
     },
     setSocket: async(student, idSocket) => {
         try {

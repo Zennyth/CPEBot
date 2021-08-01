@@ -8,7 +8,8 @@ import gradeModule from './grade.store';
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
+  storage: window.localStorage,
+  key: "MyGrades"
 });
  
 

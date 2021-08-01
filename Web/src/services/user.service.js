@@ -13,7 +13,7 @@ export default {
         });
         if(response && response.data.successfull) {
             axios.defaults.headers['x-access-token'] = response.data.token;
-            store.dispatch('login', response.data.token);
+            store.dispatch('login', response.data);
         }
     },
     signUp: async (student) => {
@@ -21,7 +21,7 @@ export default {
             const response = await axios.post('/student/signup', student);
             if(response && response.data) {
                 axios.defaults.headers['x-access-token'] = response.data.token;
-                store.dispatch('login', response.data.token);
+                store.dispatch('login', response.data);
                 return true;
             } else return false;   
         } catch (error) {
@@ -42,6 +42,16 @@ export default {
         } catch (error) {
             return {
                 error: error,
+            }
+        }
+    },
+    changeNotifications: async(payload) => {
+        try {
+            const response = await axios.post('/student/changeNotifications', payload);
+            return response && response.data; 
+        } catch (error) {
+            return {
+                error
             }
         }
     }

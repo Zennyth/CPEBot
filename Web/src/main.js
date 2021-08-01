@@ -14,10 +14,13 @@ import VueI18n from "vue-i18n";
 Vue.use(VueI18n);
 // Ready translated locale messages
 const trad = require("@/i18n/translations.json");
+const locale = (navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage).slice(0, 2);
+
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'fr',//navigator.language || 'fr', // set locale
+  locale,
   messages: trad, // set locale messages
+  silentTranslationWarn: true,
 })
 
 // Socket Setup
@@ -71,7 +74,7 @@ new Vue({
   },
   methods: {
     login: function() {
-      this.$socket.emit("login", store.getters.token);
+      this.$socket.emit("login", store.getters.token, store.state.userModule.maxNewGrades || 5);
     }
   },
   router,

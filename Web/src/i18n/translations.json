@@ -1,12 +1,22 @@
 {
     "en": {
         "home": {
-            "home": "Home"
+            "home": "Home",
+            "notifications": {
+                "title": "Set up notifications",
+                "description": "Allows you to receive notifications via discord and on your phone !",
+                "goTo": "Go to settings"
+            },
+            "maxNewGrades": {
+                "title": "Configure the number of new grades",
+                "description": "Allows you to receive a maximum number of new notes!",
+                "goTo": "Go to settings"
+            }
         },
         "register": {
             "mail": "Mail",
             "password": "Password",
-            "pseudo": "Discord Id",
+            "pseudo": "Username",
             "promotion": "Promotion",
             "sector": "Sector",
             "register": "Register",
@@ -24,7 +34,7 @@
         "grades":{
             "grades": "Grades",
             "allGrades": "All",
-            "recent": "Your mark was updated at "
+            "recent": "Latest"
         },
         "settings": {
             "settings": "Settings",
@@ -32,17 +42,31 @@
             "actualPassword": "Actual password",
             "newPassword": "New password",
             "repeatPassword": "Repeat your password",
-            "sendNewPassword": "Change"
+            "sendNewPassword": "Change",
+            "notifications": "Notifications",
+            "phone": "Phone",
+            "changeMaxNewGrades": "Modify",
+            "maxNewGrades": "Number of new grades"
         }
     },
     "fr": {
         "home": {
-            "home": "Accueil"
+            "home": "Accueil",
+            "notifications": {
+                "title": "Configurer des notifications",
+                "description": "Permet de recevoir des notifications via discord et sur votre téléphne !",
+                "goTo": "Réglages"
+            },
+            "maxNewGrades": {
+                "title": "Configurer le nombre de nouvelles notes",
+                "description": "Permet de recevoir un nombre maximum de nouvelles notes !",
+                "goTo": "Réglages"
+            }
         },
         "register": {
             "mail": "Adresse mail",
             "password": "Mot de passe",
-            "pseudo": "Id Discord",
+            "pseudo": "Pseudo",
             "promotion": "Promotion",
             "sector": "Filière",
             "register": "Créer un compte",
@@ -60,7 +84,7 @@
         "grades":{
             "grades": "Notes",
             "allGrades": "Toutes",
-            "recent": "Votre note a été soumis le "
+            "recent": "Récentes"
         },
         "settings": {
             "settings": "Réglages",
@@ -68,7 +92,11 @@
             "actualPassword": "Mot de passe actuel",
             "newPassword": "Nouveau mot de passe",
             "repeatPassword": "Répéter votre mot de passe",
-            "sendNewPassword": "Envoyer"
+            "sendNewPassword": "Envoyer",
+            "notifications": "Notifications",
+            "phone": "Téléphone",
+            "changeMaxNewGrades": "Changer",
+            "maxNewGrades": "Nombre de nouvelles notes"
         }
     }
 }

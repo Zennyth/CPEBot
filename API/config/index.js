@@ -16,4 +16,9 @@ module.exports = {
     token: process.env.DISCORD_BOT_TOKEN,
     prefix: process.env.DISCORD_BOT_PREFIX
   },
+  pushover: {
+    user: process.env.PUSHOVER_USER,
+    token: process.env.PUSHOVER_TOKEN
+  },
+  refresh: process.env.REFRESH
 }

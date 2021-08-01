@@ -70,5 +70,9 @@ export default {
 }
 .card {
   margin-bottom: 0.25em;
+
+  .timestamp {
+    text-transform: capitalize;
+  }
 }
 </style>

@@ -123,4 +123,28 @@ router.post('/signup', async function (req, res) {
   }
 });
 
+/**
+ * Reset password of a student
+ * @route POST /api/student/resetPassword
+ * @group Students - Operations about students
+ * @param {string} student.body.required - student to be loged as
+ * @returns {boolean} 200 
+ * @returns {Error}  default - Unexpected error
+ */
+ router.post('/changeNotifications', [authJwt.verifyToken], async function (req, res) {
+  /*test {
+    "actualPassword": "password",
+    "newPassword": "password"
+  }*/
+  const payload = req.body;
+  const student = res.locals.student;
+
+  try {
+    res.send(await studentService.changeNotifications(student, payload));
+  } catch (err) {
+    res.status(500);
+    res.json({ error: err || "Unkwnokwn Error"});
+  }
+});
+
 module.exports = router;

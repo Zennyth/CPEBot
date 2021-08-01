@@ -5,7 +5,9 @@ class studentMapper {
             yearpromotion: student.yearpromotion,
             idsector: student.idsector,
             mail: student.mailstudent,
-            pseudo: student.pseudostudent
+            pseudo: student.pseudostudent,
+            notification: student.notificationtoken,
+            discord: student.discordtoken,
         }
     }
 
@@ -16,7 +18,9 @@ class studentMapper {
             idsector: studentDto.idsector,
             mailstudent: studentDto.mail,
             pseudostudent: studentDto.pseudo,
-            passwordstudent: studentDto.password
+            passwordstudent: studentDto.password,
+            notificationtoken: studentDto.notification,
+            discordtoken: studentDto.discord,
         }  
     }
 }

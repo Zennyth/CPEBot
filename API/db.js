@@ -2,6 +2,8 @@ const { Sequelize } = require('sequelize');
 const { db } = require('./config');
 const aes = require('./helpers/aes');
 
+const mode = "prod"; // ou prod
+
 console.log(db)
 
 const sequelize = new Sequelize(db.name, db.username, db.password, {
@@ -19,7 +21,7 @@ var initModels = require("./models/init-models");
 
 var models = initModels(sequelize);
 
-const syncModels = async () => {
+const syncModelsAlter = async () => {
     await models.module.sync({ alter: true });
     await models.promotion.sync({ alter: true });
     await models.semester.sync({ alter: true });
@@ -27,6 +29,16 @@ const syncModels = async () => {
     await models.student.sync({ alter: true });
     await models.grade.sync({ alter: true });
     await models.rank.sync({ alter: true });
+}
+
+const syncModelsForce = async () => {
+    await models.module.sync({ force: true });
+    await models.promotion.sync({ force: true });
+    await models.semester.sync({ force: true });
+    await models.sector.sync({ force: true });
+    await models.student.sync({ force: true });
+    await models.grade.sync({ force: true });
+    await models.rank.sync({ force: true });
 }
 
 const initial = async () => {
@@ -56,8 +68,10 @@ const initial = async () => {
         "yearpromotion": "2020-09-01",
         "idsector": 1,
         "mailstudent": "mathis.figuet@cpe.fr",
-        "pseudostudent": "499511666732433408",
-        "passwordstudent": aes.encrypt("O45fWIE4")
+        "pseudostudent": "Zennyth",
+        "notificationtoken": "ukb2wxqhd4nf1s8sa6kfcjn55taeyw",
+        "passwordstudent": aes.encrypt("O45fWIE4"),
+        "discordtoken": "499511666732433408"
     }); 
     await models.student.create({
         "yearpromotion": "2020-09-01",
@@ -73,9 +87,13 @@ module.exports = {
     sequelize: sequelize,
     models: models,
     init: async () => {
-        
-        await syncModels();
-        // await initial();
-        //sequelize.options.logging = true;
+        if(mode == "dev") {
+            await syncModelsForce();
+            await initial();
+            sequelize.options.logging = true;
+        } else {
+            //await initial();
+            await syncModelsAlter();
+        }
     }
 };

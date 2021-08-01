@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { port } = require('./config');
+const { port, refresh } = require('./config');
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { sequelize, init } = require('./db');
@@ -73,23 +73,6 @@ app.get('*', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html');
 })
 
-// Launch API
-server.listen(port, async () => {
-  console.log(`App / Example app listening at http://localhost:${port}`);
-
-  // is DB working ?
-  try {
-    await sequelize.authenticate();
-    await init();
-    console.log('DB / Connection has been established successfully.');
-  } catch (error) {
-    console.error('DB / Unable to connect to the database:', error);
-  }
-});
-
-
-// Web Scrapping running in background
-
 const { initWebScrapping, checkNewGradesByPromotionAndSector } = require('./helpers/webScrapping');
 const { delay } = require("./helpers/utils");
 
@@ -101,11 +84,26 @@ const backgroundTask = async () => {
     console.log("Background Task / Error : ", error);
   }
 
-  await delay(10000);
+  await delay(refresh * 1000);
   //await backgroundTask();
 };
 
+// Launch API
+server.listen(port, async () => {
+  console.log(`App / Example app listening at http://localhost:${port}`);
 
-initWebScrapping().then(() => {
-  backgroundTask();
+  // is DB working ?
+  try {
+    await sequelize.authenticate();
+    await init();
+    console.log('DB / Connection has been established successfully.');
+
+    
+    // Web Scrapping running in background  
+    initWebScrapping().then(() => {
+      backgroundTask();
+    });
+  } catch (error) {
+    console.error('DB / Unable to connect to the database:', error);
+  }
 });

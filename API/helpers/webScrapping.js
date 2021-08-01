@@ -5,14 +5,14 @@ const moduleService = require('../services/moduleService');
 const semesterService = require('../services/semesterService');
 const sectorService = require('../services/sectorService');
 
-const socket = require("../helpers/socket");
+const socket = require("./socket");
+const notifications = require('./notifications');
+const aes = require('./aes');
 
 const { sequelize } = require('../db');
 const { QueryTypes } = require('sequelize');
 
 const SemesterMapper = require('../mappers/semesterMapper');
-
-const aes = require('../helpers/aes');
 
 const { send_notification_channel, send_notification_users } = require("../bot/bot");
 
@@ -278,6 +278,8 @@ module.exports =  {
                             await socket.updateClient(student);
                         }
                     }
+                    notifications.sendToStudents(studentsWithNewGrades);
+
                     /* Set Notifications ON (Test purpose Off)
                     if(studentsWithNewGrades.length > studentLength * .5) {
                         send_notification_channel(`${combination.lblsector.toLowerCase()}-${firstCheck.yearpromotion.split('-')[0]}`);

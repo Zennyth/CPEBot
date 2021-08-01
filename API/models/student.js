@@ -48,7 +48,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull : false,
       defaultValue : false
-    }
+    },
+    notificationtoken: {
+      type: DataTypes.STRING(30),
+      allowNull: true
+    },
+    discordtoken: {
+      type: DataTypes.STRING(20),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'student',
