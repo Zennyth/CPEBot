@@ -8,7 +8,6 @@
                 <b-form @submit.stop.prevent="handleSubmit(change)">
                 <validation-provider
                     :name="$t('settings.maxNewGrades')"
-                    :rules="{required: true}"
                     v-slot="validationContext"
                 >
                     <b-form-group id="example-input-group-10" :label="$t('settings.maxNewGrades')" label-for="example-input-10">

@@ -41,7 +41,7 @@ module.exports = {
                     if ( err ) {
                         console.log( err );
                     }
-                    console.log("Notifications / Attempt to student : ", student, status );
+                    console.log("Notifications / Attempt to student : ", student.mailstudent, status );
                 });
             }
         });

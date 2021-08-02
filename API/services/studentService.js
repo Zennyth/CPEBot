@@ -6,7 +6,6 @@ const { userInfo } = require('os');
 const sectorService = require("./sectorService");
 
 const { compare, hash } = require("../helpers/hash")
-const { create_channel } = require("../bot/bot");
 
 module.exports = {
     listAll: async () => {
@@ -81,18 +80,10 @@ module.exports = {
 
         const newStudent = await models.student.create(studentModel);
 
-        // Create channel
-        await create_channel(`${studentDto.lblsector.toLowerCase()}-${newStudent.yearpromotion.split('-')[0]}`);
-
-        return {
-            successfull: true,
-            token: studentModel.tokenlogstudent,
-            discord: student.discordtoken,
-            notification: student.notificationtoken
-        };
+        return newStudent.dataValues;
     },
     login: async (studentDto) => {
-        console.log('Service / UserDto = ', studentDto);
+        //console.log('Service / UserDto = ', studentDto);
 
         const student = await module.exports.getByMail(studentDto.mail);
         if(student === null) {
@@ -130,16 +121,17 @@ module.exports = {
         }
     },
     changeNotifications: async (student, payload) => {
-        if(payload.discord) {
-            student.discordtoken = payload.discord;
+
+        if(payload.discord || payload.discord == '') {
+            student.discordtoken = payload.discord ? payload.discord : null;
             await student.save();
             return {
                 successfull: true
             };
         }
 
-        if(payload.notification) {
-            student.notificationtoken = payload.notification;
+        if(payload.notification || payload.notification == '') {
+            student.notificationtoken = payload.notification ? payload.notification : null;
             await student.save();
             return {
                 successfull: true

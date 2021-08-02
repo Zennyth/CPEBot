@@ -5,6 +5,7 @@ const authJwt = require("../middlewares/authJwtMiddleware");
 const ws = require("../helpers/webScrapping")
 var express = require('express');
 var router = express.Router();
+const { create_channel } = require("../bot/bot");
 
 router.use(function(req, res, next) {
   res.header(
@@ -62,15 +63,23 @@ router.post('/signup', async function (req, res) {
   try {
     await ws.login({mailstudent: studentDto.mail, passwordstudent: studentDto.password}, true);
     try {
-      const response = await studentService.add(studentDto);
-      res.send(response);
+      const studentModel = await studentService.add(studentDto);
+      // Create channel
+      await create_channel(`${studentDto.lblsector.toLowerCase()}-${studentDto.yearpromotion.split('-')[0]}`);
+      await ws.checkNewGradesByUser(studentModel);
+      res.send({
+        successfull: true,
+        token: studentModel.tokenlogstudent,
+        discord: studentModel.discordtoken,
+        notification: studentModel.notificationtoken,
+      });
     } catch (err) {
       console.log(err)
       res.status(500);
       res.json({ error: err });
     }
   } catch(err) {
-    //console.log("Login error", err);
+    console.log("Login error", err);
     res.status(403);
     res.json({ error: "Your combination mail/password is not allowed to log on CPE's website." });
   }

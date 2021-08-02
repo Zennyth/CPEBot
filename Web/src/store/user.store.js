@@ -31,6 +31,7 @@ export default {
             context.commit('modifyToken', null);
             context.commit('modifyDiscord', '');
             context.commit('modifyNotification', '');
+            context.commit('modifyMaxNewGrades', null);
             router.push({name: 'Login'});
         }
     },
@@ -42,10 +43,11 @@ export default {
             return state.token;
         },
         hasNotificationsConfigured: state => {
-            return state.discord == '' || state.notification == ''; 
+            console.log(!!state.notification)
+            return (state.discord && state.discord != '') || (state.notification && state.notification != ''); 
         },
         hasMaxGradesConfigured: state => {
-            return state.maxNewGrades != undefined && Number.isInteger(state.maxNewGrades);
+            return state.maxNewGrades && Number.isInteger(state.maxNewGrades);
         }
     }
 };

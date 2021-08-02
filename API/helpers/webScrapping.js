@@ -223,8 +223,8 @@ const setNestedSemestersModulesGrades = async (nestedSemesters) => {
     }
 };
 
-const checkNewGrades = async (student = null) => {
-    await module.exports.login(student);
+const checkNewGrades = async (student = null, dto = false) => {
+    await module.exports.login(student, dto);
 
     const currentGradesLabel = getLabelGradesFromSemesters(await gradeService.getAllGradesByUser(current_user.idstudent));
     //console.log("WebScrapping / checkNewGrades (current grades label): ", currentGradesLabel.length);
@@ -254,7 +254,7 @@ module.exports =  {
     checkNewGradesByUser: checkNewGrades,
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("florent.monnet@cpe.fr");
-        current_user = current_user.dataValues;
+        current_user = current_user?.dataValues || null;
     },
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
@@ -280,23 +280,21 @@ module.exports =  {
                     }
                     notifications.sendToStudents(studentsWithNewGrades);
 
-                    /* Set Notifications ON (Test purpose Off)
+                    // Set Notifications ON (Test purpose Off)
                     if(studentsWithNewGrades.length > studentLength * .5) {
                         send_notification_channel(`${combination.lblsector.toLowerCase()}-${firstCheck.yearpromotion.split('-')[0]}`);
                     } else {
                         send_notification_users(studentsWithNewGrades);
-                    }*/
+                    }
                 }
             }
         }
     },
     login: async (user = null, dto = false) => {
         if(user != null) {
-            if(user.mailstudent != current_user.mailstudent) resetCookies();
-            current_user = user; // In case the user has changed his crendentials
+            if(user.mailstudent != current_user?.mailstudent) resetCookies();
+            current_user = current_user?.dataValues || user;
         }
-    
-        //console.log(current_user);
 
         resetCookies();
         const response = await instance.get(loginUrl);

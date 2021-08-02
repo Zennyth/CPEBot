@@ -66,7 +66,7 @@ new Vue({
       }
     },
     updateClient({ newGradesIcon, grades, newGrades }) {
-      //console.log("Update : ", { newGradesIcon, grades, newGrades })
+      console.log("Update : ", { newGradesIcon, grades, newGrades })
       this.$store.commit("setNewGradesIcon", newGradesIcon);
       this.$store.dispatch("saveGrades", grades);
       this.$store.dispatch("saveNewGrades", newGrades);

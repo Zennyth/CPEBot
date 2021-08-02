@@ -10,7 +10,6 @@
                         <b-form @submit.stop.prevent="handleSubmit(changeNotification)">
                             <validation-provider
                               name="PushOver Token"
-                              :rules="{required: true}"
                               v-slot="validationContext"
                             >
                                 <b-form-group id="example-input-group-1" label-for="example-input-5">
@@ -40,7 +39,6 @@
                         <b-form @submit.stop.prevent="handleSubmit(changeDiscord)">
                             <validation-provider
                                 name="Token"
-                                :rules="{required: true}"
                                 v-slot="validationContext"
                             >
                                 <b-form-group id="example-input-group-6" label-for="example-input-6">

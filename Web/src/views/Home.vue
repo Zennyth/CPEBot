@@ -4,7 +4,7 @@
       <section>
         <h1>{{$t("home.home")}}</h1>
         <br>
-        <Card variant="glass" v-if="$store.getters.hasNotificationsConfigured">
+        <Card variant="glass" v-if="!$store.getters.hasNotificationsConfigured">
           <template v-slot:header>
             <h4>{{$t("home.notifications.title")}}</h4>
           </template>

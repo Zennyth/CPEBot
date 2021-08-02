@@ -42,6 +42,7 @@ const syncModelsForce = async () => {
 }
 
 const initial = async () => {
+    /*
     await models.promotion.create({
         "yearpromotion": "2020-09-01"
     });
@@ -62,17 +63,7 @@ const initial = async () => {
     });
     await models.semester.create({
         idsemester: "SEMESTRE 5"
-    });
-    
-    await models.student.create({
-        "yearpromotion": "2020-09-01",
-        "idsector": 1,
-        "mailstudent": "mathis.figuet@cpe.fr",
-        "pseudostudent": "Zennyth",
-        "notificationtoken": "ukb2wxqhd4nf1s8sa6kfcjn55taeyw",
-        "passwordstudent": aes.encrypt("O45fWIE4"),
-        "discordtoken": "499511666732433408"
-    }); 
+    });*/
     await models.student.create({
         "yearpromotion": "2020-09-01",
         "idsector": 1,
