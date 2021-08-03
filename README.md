@@ -24,7 +24,7 @@
     <br />
     <a href="https://cpe.mathis-figuet.com/">View Demo</a>
     ·
-    <a href="https://github.com/Zennyth/CPEBot/OPERATING.md">How it works</a>
+    <a href="https://github.com/Zennyth/CPEBot/blob/main/OPERATING.md">How it works</a>
     ·
     <a href="https://github.com/Zennyth/CPEBot/issues">Report Bug</a>
     ·
