@@ -23,4 +23,21 @@
   </p>
 </p>
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#password-management">Password management</a></li>
+  </ol>
+</details>
+
+<!-- Architecture -->
+## Architecture
+
 <img src="https://github.com/Zennyth/CPEBot/blob/main/Ressources/static/Architecture.png" alt="Logo" width="100%" height="100%">
+
+
+<!-- Password management -->
+## Password management
+
+<img src="https://github.com/Zennyth/CPEBot/blob/main/Ressources/static/PasswordManagement.png" alt="Logo" width="100%" height="100%">
