@@ -1,6 +1,5 @@
 body {
     height: 100vh;
-    height: -webkit-fill-available;
     overflow: hidden;
 }
 
@@ -84,3 +83,30 @@ body {
 #web {
     position: relative;
 }
+
+html, #web {
+    min-height: 100vh;
+}
+
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) {
+    body {
+        height: auto !important;
+        min-height: -webkit-fill-available !important;
+        min-height: 100vh !important;
+        overflow: hidden !important;
+    }
+
+    #app, #background, .login, html, #web {
+        height: 100% !important;
+        min-height: -webkit-fill-available !important;
+    }
+
+    html {
+        overflow: hidden !important;
+    }
+
+    #app {
+        font-size: smaller;
+    }
+}}

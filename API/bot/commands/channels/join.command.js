@@ -14,8 +14,10 @@ module.exports = {
 		// Check if channel exists
 		if(channel) {
 			privateChannels(client.channels.cache).forEach(ch => {
-				const permissions = ch.permissionOverwrites?.get(message.author.id);
-				if(permissions) permissions.delete();
+				if(ch.permissionOverwrites) {
+					const permissions = ch.permissionOverwrites.get(message.author.id);
+					if(permissions) permissions.delete();
+				}
 			});
 			channel.updateOverwrite(message.author, {
 				'VIEW_CHANNEL': true

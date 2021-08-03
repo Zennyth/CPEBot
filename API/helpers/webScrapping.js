@@ -254,7 +254,7 @@ module.exports =  {
     checkNewGradesByUser: checkNewGrades,
     initWebScrapping: async () => {
         current_user = await studentService.getByMail("florent.monnet@cpe.fr");
-        current_user = current_user?.dataValues || null;
+        current_user = current_user ? current_user.dataValues || null : null;
     },
     checkNewGradesByPromotionAndSector: async () => {
         const combinations = await sequelize.query("SELECT * FROM sector, promotion", { type: QueryTypes.SELECT });
@@ -292,8 +292,8 @@ module.exports =  {
     },
     login: async (user = null, dto = false) => {
         if(user != null) {
-            if(user.mailstudent != current_user?.mailstudent) resetCookies();
-            current_user = current_user?.dataValues || user;
+            if(current_user && user.mailstudent != current_user.mailstudent) resetCookies();
+            current_user = current_user && current_user.dataValues ? current_user.dataValues : user;
         }
 
         resetCookies();

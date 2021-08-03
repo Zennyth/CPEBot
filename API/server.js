@@ -85,7 +85,7 @@ const backgroundTask = async () => {
   }
 
   await delay(refresh * 1000);
-  await backgroundTask();
+  // await backgroundTask();
 };
 
 // Launch API
