@@ -40,4 +40,14 @@
 <!-- Password management -->
 ## Password management
 
+### Improvements
+
+We wish to provide the most secure version of this application but we're just IT students, we don't know much about security.
+If you have an idea about how to improve our security system, here are some requirements :
+- The server needs to webscrap CPE's website. (The server must know the credentials email:password in order to log in)
+- I've deployed the service with my wn money so you need to think of a "simple solution"
+
+Please contact me by email if you think of a better solution.
+
+
 <img src="https://github.com/Zennyth/CPEBot/blob/main/Ressources/static/PasswordManagement.png" alt="Logo" width="100%" height="100%">
