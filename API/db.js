@@ -64,14 +64,6 @@ const initial = async () => {
     await models.semester.create({
         idsemester: "SEMESTRE 5"
     });*/
-    await models.student.create({
-        "yearpromotion": "2020-09-01",
-        "idsector": 1,
-        "mailstudent": "florent.monnet@cpe.fr",
-        "pseudostudent": "nainculé",
-        "passwordstudent": aes.encrypt("Nounours38.0"),
-        "ispublic": true
-    });
 }
 
 module.exports = {
